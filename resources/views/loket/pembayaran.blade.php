@@ -4,15 +4,8 @@
   <div class="animated flipInY col-lg-6 col-md-6 col-sm-12 col-xs-12">
     <div class="tile-stats">
       <div class="icon"><i class="fa fa-file-text"></i></div>
-      <div class="count">{{ count($resep) }}</div>
-      <h3>Total Resep Obat</h3>
-    </div>
-  </div>
-  <div class="animated flipInY col-lg-6 col-md-6 col-sm-12 col-xs-12">
-    <div class="tile-stats">
-      <div class="icon"><i class="fa fa-file-text"></i></div>
-      <div class="count">{{ count($hariIni) }}</div>
-      <h3>Total Resep Obat Hari Ini</h3>
+      <div class="count">{{ count($pembayaran) }}</div>
+      <h3>Total Data Pembayaran</h3>
     </div>
   </div>
 </div>
@@ -28,7 +21,7 @@
   {{-- Collapse excel --}}
   <div class="collapse" id="collapse-excel">
     <div class="well">
-      <form action="{{route('excelResep', 'xlsx')}}" method="post" id="frm-excel" target="_blank">
+      <form action="{{route('excelPembayaran', 'xlsx')}}" method="post" id="frm-excel" target="_blank">
       {{csrf_field()}}
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div class="form-group">
@@ -52,7 +45,7 @@
   {{-- Collapse Pdf --}}
   <div class="collapse" id="collapse-pdf">
     <div class="well">
-      <form action="{{route('PDFResep')}}" method="post" id="frm-pdf">
+      <form action="{{route('PDFPembayaran')}}" method="post" id="frm-pdf">
       {{csrf_field()}}
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div class="form-group">
@@ -72,9 +65,10 @@
       </form>
     </div>
   </div>
+
     <div class="x_panel">
       <div class="x_title">
-        <h2>Data Rekam Medis</h2>
+        <h2>Data Pembayaran</h2>
         <ul class="nav navbar-right panel_toolbox">
           <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
           <li><a class="close-link"><i class="fa fa-close"></i></a></li>
@@ -86,22 +80,24 @@
           <thead>
             <tr>
               <th>No.</th>
+              <th>Dokter</th>
               <th>Nama Pasien</th>
-              <th>Tanggal Resep</th>
+              <th>Tanggal Pemeriksaan</th>
               <th>Biaya</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
           <?php $no = 1; ?>
-          @foreach($resep as $data)
+          @foreach($pembayaran as $data)
             <tr>
               <td>{{ $no++ }}</td>
+              <td>{{ $data['dokter']['nama'] }}</td>
               <td>{{ $data['pasien']['nama'] }}</td>
               <td>{{ date('d-m-Y', strtotime($data['created_at'])) }}</td>
               <td>{{ $data['biaya_pemeriksaan']}}</td>
               <td>
-                <a href="{{ route('printDetailResep', $data['pasien']['id']) }}" target="_blank" class="btn btn-info btn-flat"><i class="fa fa-print"></i></a>
+                <a href="{{ route('printDetailPembayaran', $data['pasien']['id']) }}" target="_blank" class="btn btn-info btn-flat"><i class="fa fa-print"></i></a>
                 <a href="#modal-detail" data-toggle="modal" class="btn btn-success btn-flat btn-detail" data-id="{{$data['pasien']['id']}}"
                 ><i class="fa fa-search"></i></a>
                {{--  <a href="#modal-edit" data-toggle="modal" class="btn btn-warning btn-flat"><i class="fa fa-edit"></i></a> --}}
@@ -121,17 +117,17 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Detail Resep</h4>
+        <h4 class="modal-title">Detail Pembayaran</h4>
       </div>
       <div class="modal-body">
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
-              <th width="20%">Tgl. Resep</th>
-              <th width="80%">Isi Resep</th>
+              <th width="20%">Tgl. Pembayaran</th>
+              <th width="80%">Keterangan</th>
             </tr>
           </thead>
-          <tbody id="daftar-resep">
+          <tbody id="daftar-keterangan">
           
           </tbody>
         </table>
@@ -172,7 +168,7 @@
         if ($('tr#baris').length >= 1) {
           return true;
         }else{
-        $.get("{{route('getIsiResep')}}", {pasien_id:pasien_id}, function(data) {
+        $.get("{{route('getIsiPembayaran')}}", {pasien_id:pasien_id}, function(data) {
           $.each(data, function(i, item) {
             var date = new Date();
             var hari = date.getDate(item.created_at);
@@ -180,7 +176,7 @@
             var tahun = date.getFullYear(item.created_at);
             console.log(item);
             var table = '<tr id="baris"><td>'+hari + '-' + bulan +'-' + tahun+'</td><td>Nama Obat : '+item.obat.nama+' | Jumlah : '+item.jumlah+'  | Signa : '+item.keterangan+'</td></tr>';
-            $('#daftar-resep').append(table);
+            $('#daftar-keterangan').append(table);
           }); 
         });
       };

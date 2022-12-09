@@ -60,7 +60,7 @@
               <td>Total</td>
             </tr>
             <?php $no = 1;?>
-            @foreach($resep as $data)
+            @foreach($pembayaran as $data)
               <tr>
                 <td>{{ $data['obat']['nama'] }}</td>
                 <td>Rp. {{$data['obat']['harga']}}</td>
@@ -68,10 +68,10 @@
                 <td>Rp. {{($data['obat']['harga'] * $data['jumlah'])}}</td>
               </tr>
               @endforeach
-              @if($resep[0]['biaya_dokter'] != 0 || $resep[0]['biaya_dokter'] != null)
+              @if($pembayaran[0]['biaya_pemeriksaan'] != 0 || $pembayaran[0]['biaya_pemeriksaan'] != null)
                   <tr>
                     <td colspan="3">Biaya Dokter</td>
-                    <td>Rp. {{number_format($resep[0]['biaya_dokter'])}}</td>
+                    <td>Rp. {{number_format($pembayaran[0]['biaya_pemeriksaan'])}}</td>
                   </tr>
               @endif
           </table>
@@ -110,7 +110,7 @@
               <td>Nama Obat</td>
               <td>Keterangan</td>
           </tr>
-          @foreach($resep as $key => $data)
+          @foreach($pembayaran as $key => $data)
             <tr>
               <td>{{++$key}}.</td>
               <td>{{$data['obat']['nama']}}</td>

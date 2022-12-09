@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Pasien;
 use App\RK_Medis;
 use App\Obat;
-use App\Resep;
+use App\Dokter;
+use App\Pembayaran;
 use App\TransaksiPasien;
 use App\KategoriObat;
 use Session;
@@ -18,12 +19,12 @@ class DokterController extends Controller
     	 $this->middleware('dokter');
     }
 
-    public function index(Pasien $pasien) {
-            $antri = $pasien->with('no_antrian')->whereDate('created_at', date('Y-m-d'))->where(['status' => 'antri', 'layanan_dokter' => Session::get('id')])->get();
-            $obat = $pasien->whereDate('created_at', date('Y-m-d'))->where(['status' => 'obat', 'layanan_dokter' => Session::get('id')])->orderBy('updated_at')->get();
-            $pasien = $pasien->where('layanan_dokter', Session::get('id'))->whereDate('created_at', date('Y-m-d'))->get();
-
-    	return view('dokter.index', ['antri'=> $antri, 'obat' => $obat, 'pasien' => $pasien]);
+    public function index(Pasien $pasien) {   
+        $antri = $pasien->with('no_antrian')->whereDate('created_at', date('Y-m-d'))->where(['status' => 'antri', 'layanan_dokter' => Session::get('id')])->get();
+        $obat = Obat::with('kategori')->get()->toArray();
+        $pasien = $pasien->where('layanan_dokter', Session::get('id'))->whereDate('created_at', date('Y-m-d'))->get();
+        $kategori = KategoriObat::get()->toArray();
+    	return view('dokter.index', ['antri'=> $antri, 'obat' => $obat, 'pasien' => $pasien, 'kategori' => $kategori]);
     }
 
     public function getRekamMedisPasien($pasien_id, $nama, $tgl_lahir) {
@@ -66,19 +67,6 @@ class DokterController extends Controller
                 'alergi_obat' => $request->alergi_obat,
             ]);
 
-            $pasien = Pasien::find($request->pasien_id)->update(['status' => 'obat']);
-
-            for ($i=0; $i <count($request['obat']) ; $i++) {
-                $resep = Resep::create([
-                    'dokter_id'    => $request['dokter_id'],
-                    'pasien_id'    =>   $request['pasien_id'],
-                    'obat_id'        =>     $request['obat'][$i]['value'],
-                    'keterangan'  =>    $request['keterangan'][$i]['value'],
-                    'jumlah'          =>    $request['jumlah'][$i]['value'],
-                    'biaya_dokter' => $request['biaya_dokter'],
-                    'status'          =>     'belum'
-                ]);
-            }
 
             return response()->json($rekamMedis);
         }
@@ -155,23 +143,31 @@ class DokterController extends Controller
         return view('dokter.pdf', ['bulan' => $bulan, 'tahun' => $tahun, 'rekamMedis' => $rekamMedis]);
     }
 
-    public function getResep() {
-            $resep = Resep::with(['pasien', 'obat'])->where('dokter_id', Session::get('id'))->orderBy('created_at', 'desc')->groupBy('pasien_id')->get()->toArray();
-            // dd($resep);
-            $hariIni = Resep::where('dokter_id', Session::get('id'))->whereDate('created_at', date('y-m-d'))->get()->toArray();
-    	return view('dokter.resep', ['resep' => $resep, 'hariIni' => $hariIni]);
+    public function getPembayaran() {
+            $pembayaran = Pembayaran::with(['dokter','pasien', 'obat'])->where('dokter_id', Session::get('id'))->orderBy('created_at', 'desc')->groupBy('pasien_id')->get()->toArray();
+            $hariIni = Pembayaran::where('dokter_id', Session::get('id'))->whereDate('created_at', date('y-m-d'))->get()->toArray();
+            $dokter = Pembayaran::where('dokter_id', Session::get('id'))->get()->toArray();
+    	return view('dokter.pembayaran', ['pembayaran' => $pembayaran, 'hariIni' => $hariIni, 'dokter' => $dokter]);
     }
 
-    public function excelResep(Request $request, $type) {
-            Excel::create('Data Resep ' .  $request->bulan .'-' .$request->tahun, function ($excel) use ($request){
-                $excel->sheet('Data Resep ' .  $request->bulan .'-' .$request->tahun, function ($sheet) use ($request){
+    public function postPembayaran(Request $request) {
+        if ($request->ajax()) {
+            $data = Pembayaran::create($request->all());
+            return response()->json($data);
+        }
+    }
+
+    public function excelPembayaran(Request $request, $type) {
+            Excel::create('Data Pembayaran ' .  $request->bulan .'-' .$request->tahun, function ($excel) use ($request){
+                $excel->sheet('Data Pembayaran ' .  $request->bulan .'-' .$request->tahun, function ($sheet) use ($request){
                     $bulan = $request->bulan;
                     $tahun = $request->tahun;
                     $arr = array();
-                    $barang = Resep::with(['pasien', 'obat'])->where('dokter_id', Session::get('id'))->whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->get()->toArray();
+                    $barang = Pembayaran::with(['dokter', 'pasien', 'obat'])->where('dokter_id', Session::get('id'))->whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->get()->toArray();
                     foreach ($barang as $data) {
                         $data_arr = array(
                             $data['id'],
+                            $data['dokter']['nama'],
                             $data['pasien']['nama'],
                             $data['obat']['nama'],
                             $data['jumlah'],
@@ -181,6 +177,7 @@ class DokterController extends Controller
                     }
                     $sheet->fromArray($arr, null, 'A1', false, false)->prependRow(array(
                         'ID',
+                        'Nama Dokter',
                         'Nama Pasien',
                         'Nama Obat',
                         'Jumlah',
@@ -190,23 +187,21 @@ class DokterController extends Controller
             })->download($type);
     }
 
-    public function PDFResep(Request $request) {
+    public function PDFPembayaran(Request $request) {
         $bulan = $request['bulan'];
         $tahun = $request['tahun'];
-        $resep = Resep::with(['pasien', 'dokter', 'obat'])->where('dokter_id', Session::get('id'))->whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->get()->toArray();
-        // dd($resep);
-        return view('dokter.pdf-resep', ['bulan' => $bulan, 'tahun' => $tahun, 'resep' => $resep]);
+        $pembayaran = Pembayaran::with(['pasien', 'dokter', 'obat'])->where('dokter_id', Session::get('id'))->whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->get()->toArray();
+        return view('dokter.pdf-pembayaran', ['bulan' => $bulan, 'tahun' => $tahun, 'pembayaran' => $pembayaran]);
     }
 
-    public function printDetailResep($id) {
-        $resep = Resep::with(['pasien', 'obat'])->where(['dokter_id' => Session::get('id'), 'pasien_id' => $id])->get()->toArray();
-        // dd($resep);
-        return view('dokter.print-resep', ['resep' => $resep]);
+    public function printDetailPembayaran($id) {
+        $pembayaran = Pembayaran::with(['dokter', 'pasien', 'obat'])->where(['dokter_id' => Session::get('id'), 'pasien_id' => $id])->get()->toArray();
+        return view('dokter.print-pembayaran', ['pembayaran' => $pembayaran]);
     }
 
-    public function getIsiResep(Request $request) {
+    public function getIsiPembayaran(Request $request) {
         if ($request->ajax()) {
-            $data = Resep::with('obat')->where(['dokter_id' => Session::get('id'), 'pasien_id' => $request->pasien_id])->get();
+            $data = Pembayaran::with('obat')->where(['dokter_id' => Session::get('id'), 'pasien_id' => $request->pasien_id])->get();
             return response()->json($data);
         }
     }

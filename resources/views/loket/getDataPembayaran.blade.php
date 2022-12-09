@@ -4,7 +4,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="x_panel">
 		<div class="x_title">
-			<h2>Isi Resep | <span class="btn btn-primary btn-flat" style="color:white">Dr. {{$nama_dokter['dokter']['nama']}}</span> | <span class="btn btn-info btn-flat" style="color:white">Pasien: {{$nama_pasien['pasien']['nama']}}</span></h2>
+			<h2>Isi Pembayaran| <span class="btn btn-primary btn-flat" style="color:white">Dr. {{$nama_dokter['dokter']['nama']}}</span> | <span class="btn btn-info btn-flat" style="color:white">Pasien: {{$nama_pasien['pasien']['nama']}}</span></h2>
 			<ul class="nav navbar-right panel_toolbox">
 				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 			</li>
@@ -15,7 +15,7 @@
 </div>
 <div class="x_content">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<a href="{{route('loket.index')}}" class="btn btn-danger btn-flat btn-md"><i class="fa fa-arrow-left"></i> Kembali</a>
+		<a href="{{route('dokter.index')}}" class="btn btn-danger btn-flat btn-md"><i class="fa fa-arrow-left"></i> Kembali</a>
 		@if ($ada)
 			<button class="btn btn-primary btn-flat btn-md btn-konfirmasi pull-right">Konfirmasi pembayaran <i class="fa fa-credit-card"></i></button>
 		@endif
@@ -36,11 +36,6 @@
 				<tr>
 					<th>Jumlah Obat</th>
 					<td id="total-jumlah-ada"></td>
-				</tr>
-				<tr>
-					<th>Biaya Dokter</th>
-					<td>Rp. {{($ada ? $ada[0]['biaya_dokter'] : $habis[0]['biaya_dokter'])}}</td>
-					<input type="hidden" value="{{($ada ? $ada[0]['biaya_dokter'] : $habis[0]['biaya_dokter'])}}" id="biaya_dokter">
 				</tr>
 				<tr>
 					<th>Biaya Obat</th>
@@ -128,7 +123,7 @@
 	<div class="row">
 		<div class="col-xs-12 ">
 			@if($habis)
-		<form action="{{url('/loket/DetailResep/dokter_id='.$data['dokter_id']. '&pasien_id='.$data['pasien_id'].'/Print')}}" method="post" target="_blank">
+		<form action="{{url('/dokter/DetailPembayaran/dokter_id='.$data['dokter_id']. '&pasien_id='.$data['pasien_id'].'/Print')}}" method="post" target="_blank">
 		{{csrf_field()}}
 		@foreach ($habis as $data)
 		<input type="hidden" name="habis[]" value="{{$data['id']}}">
@@ -188,7 +183,7 @@
 				biaya_dokter: biaya_dokter
 			};
 			$.ajax({
-			    url: '{{route('postResep')}}',
+			    url: '{{route('postPembayaran')}}',
 			    data: data,
 			    method:'POST',
 			    dataType: 'json',
@@ -200,7 +195,7 @@
 		  	});
 
 			function newTabs(tagihan_id) {
-				window.open("/loket/print-tagihan/tagihan="+tagihan_id+"&dokter_id="+dokter_id+"&pasien_id="+pasien_id, "_newtab")
+				window.open("/dokter/print-tagihan/tagihan="+tagihan_id+"&dokter_id="+dokter_id+"&pasien_id="+pasien_id, "_newtab")
 			}
 
 		});

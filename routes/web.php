@@ -65,12 +65,13 @@ Route::group(['prefix' => 'dokter'], function() {
 	Route::post('/rekam-medis/export/pdf', ['uses' => 'DokterController@exportPDFRekamMedis', 'as' => 'exportPDFRekamMedis']);
 	Route::get('/rekam-medis/delete', ['uses' => 'DokterController@getDeleteRekamMedis', 'as' => 'getDeleteRekamMedis']);
 
-	// Resep Dokter
-	Route::get('/resep', ['uses' => 'DokterController@getResep', 'as' => 'getResep']);
-	Route::post('/resep/excel/{type}', ['uses' => 'DokterController@excelResep', 'as' => 'excelResep']);
-	Route::post('/resep/export/pdf', ['uses' => 'DokterController@PDFResep', 'as' => 'PDFResep']);
-	Route::get('/resep/print/detail/{id}', ['uses' => 'DokterController@printDetailResep', 'as' => 'printDetailResep']);
-	Route::get('/resep/detail', ['uses' => 'DokterController@getIsiResep', 'as' => 'getIsiResep']);
+	// Pembayaran
+	Route::get('/pembayaran', ['uses' => 'DokterController@getPembayaran', 'as' => 'getPembayaran']);
+	Route::post('/pembayaran/excel/{type}', ['uses' => 'DokterController@excelPembayaran', 'as' => 'excelPembayaran']);
+	Route::post('/pembayaran/export/pdf', ['uses' => 'DokterController@PDFPembayaran', 'as' => 'PDFPembayaran']);
+	Route::get('/pembayaran/print/detail/{id}', ['uses' => 'DokterController@printDetailPembayaran', 'as' => 'printDetailPembayaran']);
+	Route::get('/pembayaran/detail', ['uses' => 'DokterController@getIsiPembayaran', 'as' => 'getIsiPembayaran']);
+	Route::get('/data-pembayaran', ['uses' => 'DokterController@getDataPembayaran', 'as' => 'getDataPembayaran']);
 
 	//Obat
 	Route::get('/obat', ['uses' => 'DokterController@getObat', 'as' => 'ambilGetObat']);
@@ -104,6 +105,7 @@ Route::group(['prefix' => 'loket'], function() {
 	Route::get('/getHapusKategori', ['uses' => 'LoketController@getHapusKategori', 'as' => 'getHapusKategori']);
 	Route::post('/postUpdateKategori', ['uses' => 'LoketController@postUpdateKategoriObat', 'as' => 'postUpdateKategori']);
 	Route::get('/print-tagihan/tagihan={tagihan_id}&dokter_id={dokter_id}&pasien_id={pasien_id}', ['uses' => 'LoketController@getPrintTagihan', 'as' => 'loket.getPrintTagihan']);
+
 
 });
 

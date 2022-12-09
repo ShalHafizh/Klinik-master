@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Data Resep Obat | Pasien : {{ $resep[0]['pasien']['nama'] }}</title>
+    <title>Data Pembayaran | Dr. {{ $pembayaran[0]['dokter']['nama'] }}</title>
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,27 +20,31 @@
     </style> --}}
     <body onload="window.print()">
     <div class="page-header">
-      <h1>Data Resep Obat | <small>Pasien : {{ $resep[0]['pasien']['nama'] }}</small></h1>
+      <h1>Data Pembayaran| Dr. {{ $pembayaran[0]['dokter']['nama'] }}</h1>
     </div>
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
         <th>No.</th>
+        <th>Nama Pasien</th>
         <th>Nama Obat</th>
         <th>Jumlah</th>
-        <th>Signa</th>
-        <th>Biaya</th>
+        <th>Keterangan</th>
+        <th>Harga Obat</th>
+        <th>Biaya Pemeriksaan</th>
         </tr>
     </thead>
     <tbody>
     <?php $no = 1; ?>
-        @foreach($resep as $data)
+        @foreach($pembayaran as $data)
           <tr>
               <td>{{$no++}}</td>
+              <td>{{ $data['pasien']['nama'] }}</td>
               <td>{{ $data['obat']['nama'] }}</td>
               <td>{{ $data['jumlah'] }}</td>
               <td>{{ $data['keterangan'] }}</td>
-              <td>{{ $data['biaya_pemeriksaan'] }}</td>
+              <td>{{ $data['obat']}}</td>
+              <td>{{ $data['biaya_pemeriksaan']}}</td>
           </tr>
         @endforeach
     </tbody>

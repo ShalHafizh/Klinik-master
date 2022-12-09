@@ -97,7 +97,7 @@
             <li><a href="{{ route('dokter.index') }}"><i class="fa fa-stethoscope "></i> Pemeriksaan Pasien</a>
           </li>
           <li><a href="{{ route('getRekamMedis') }}"><i class="fa fa-list-alt"></i> Data Rekam Medis</a>
-          <li><a href="{{ route('getResep') }}"><i class="fa fa-file-text"></i> Data Resep </a>
+          <li><a href="{{ route('getPembayaran') }}"><i class="fa fa-file-text"></i> Data Pembayaran </a>
             <li><a href="{{ route('ambilGetObat') }}"><i class="fa fa-medkit"></i> Data Obat</a>
               <li><a href="{{ route('ambilGetKategori') }}"><i class="fa fa-bars"></i> Data Kategori Obat</a>
         </li>

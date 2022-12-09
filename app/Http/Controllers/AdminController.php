@@ -144,11 +144,18 @@ class AdminController extends Controller
     }
     
     public function postPoli(Request $request) {
-        if($request->ajax()) {
-            $data = Poli::create($request->all());
-            return response()->json($data);
-        }
+        if ($request) {
+            $poli = new Poli;
+            $poli->ID_POLI = $request->ID_POLI;
+            $poli->NAMA_POLI = $request->NAMA_POLI;
+            $poli->KETERANGAN_POLI = $request->KETERANGAN_POLI;
+            $poli->STATUS_POLI = $request->STATUS_POLI;
+
+            $poli->save();
+
+            return redirect()->route('getPoli');
     }
+}
     
     public function updatePoli(Request $request) {
         if ($request->ajax()) {

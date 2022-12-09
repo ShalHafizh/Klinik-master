@@ -6,14 +6,6 @@
     <span class="count_top"><i class="fa fa-user"></i> Total Pasien</span>
     <div class="count" id="totalPasien">{{ count($total) }}</div>
   </div>
-  <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
-    <span class="count_top"><i class="fa fa-clock-o"></i> Pasien Bulan Ini</span>
-    <div class="count" id="pasienBulanIni">{{ count($bulan) }}</div>
-  </div>
-  <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
-    <span class="count_top"><i class="fa fa-user"></i> Pasien Hari Ini</span>
-    <div class="count green" id="pasienHariIni">{{ count($pasien) }}</div>
-  </div>
 </div>
 <hr>
 
