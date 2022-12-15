@@ -28,7 +28,7 @@
   {{-- Collapse excel --}}
   <div class="collapse" id="collapse-excel">
     <div class="well">
-      <form action="{{ route('exportExcelRekamMedis', 'xlsx') }}" method="post" id="frm-excel" target="_blank">
+      <form action="{{ route('tampilExcelRekamMedis', 'xlsx') }}" method="post" id="frm-excel" target="_blank">
       {{ csrf_field() }}
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div class="form-group">
@@ -52,7 +52,7 @@
   {{-- Collapse Pdf --}}
   <div class="collapse" id="collapse-pdf">
     <div class="well">
-      <form action="{{route('exportPDFRekamMedis')}}" method="post" id="frm-pdf" target="_blank">
+      <form action="{{route('tampilPDFRekamMedis')}}" method="post" id="frm-pdf" target="_blank">
       {{ csrf_field() }}
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div class="form-group">
@@ -351,7 +351,7 @@
         event.preventDefault();
         var data = $(this).serialize();
         // console.log(data);
-        $.post("{{route('postUpdateRekamMedis')}}", data, function() {
+        $.post("{{route('tampilUpdateRekamMedis')}}", data, function() {
           toastr.success('Success !', 'Data berhasil di simpan !');
           $('#modal-edit').modal('hide');
           location.reload();
@@ -369,7 +369,7 @@
                   typeAnimated: true,
                   buttons: {
                   confirm: function () {
-                        $.get("{{ route('getDeleteRekamMedis') }}", {id:id}, function(data) {
+                        $.get("{{ route('ambilDeleteRekamMedis') }}", {id:id}, function(data) {
                           toastr.success('Success !', 'Data berhasil di hapus');
                           location.reload();
                         });

@@ -97,30 +97,30 @@ Route::group(['prefix' => 'loket'], function() {
 	Route::get('/getObat', ['uses' => 'LoketController@getObat', 'as' => 'ambilObat']);
 
 	// Rekam Medis
-	Route::get('/rekam-medis', ['uses' => 'LoketController@getRekamMedis', 'as' => 'getRekamMedis']);
-	Route::post('/rekam-medis', ['uses' => 'LoketController@postUpdateRekamMedis', 'as' => 'postUpdateRekamMedis']);
-	Route::post('/rekam-medis/excel/{type}', ['uses' => 'LoketController@exportExcelRekamMedis', 'as' => 'exportExcelRekamMedis']);
-	Route::post('/rekam-medis/export/pdf', ['uses' => 'LoketController@exportPDFRekamMedis', 'as' => 'exportPDFRekamMedis']);
-	Route::get('/rekam-medis/delete', ['uses' => 'LoketController@getDeleteRekamMedis', 'as' => 'getDeleteRekamMedis']);
+	Route::get('/rekam-medis', ['uses' => 'LoketController@getRekamMedis', 'as' => 'ambilRekamMedis']);
+	Route::post('/rekam-medis', ['uses' => 'LoketController@postUpdateRekamMedis', 'as' => 'tampilUpdateRekamMedis']);
+	Route::post('/rekam-medis/excel/{type}', ['uses' => 'LoketController@exportExcelRekamMedis', 'as' => 'tampilExcelRekamMedis']);
+	Route::post('/rekam-medis/export/pdf', ['uses' => 'LoketController@exportPDFRekamMedis', 'as' => 'tampilPDFRekamMedis']);
+	Route::get('/rekam-medis/delete', ['uses' => 'LoketController@getDeleteRekamMedis', 'as' => 'ambilDeleteRekamMedis']);
 
 	// Pembayaran
-	Route::get('/pembayaran', ['uses' => 'LoketController@getPembayaran', 'as' => 'getPembayaran']);
-	Route::post('/pembayaran/excel/{type}', ['uses' => 'LoketController@excelPembayaran', 'as' => 'excelPembayaran']);
-	Route::post('/pembayaran/export/pdf', ['uses' => 'LoketController@PDFPembayaran', 'as' => 'PDFPembayaran']);
-	Route::get('/pembayaran/print/detail/{id}', ['uses' => 'LoketController@printDetailPembayaran', 'as' => 'printDetailPembayaran']);
-	Route::get('/pembayaran/detail', ['uses' => 'LoketController@getIsiPembayaran', 'as' => 'getIsiPembayaran']);
-	Route::get('/data-pembayaran', ['uses' => 'LoketController@getDataPembayaran', 'as' => 'getDataPembayaran']);
+	Route::get('/pembayaran', ['uses' => 'LoketController@getPembayaran', 'as' => 'ambilPembayaran']);
+	Route::post('/pembayaran/excel/{type}', ['uses' => 'LoketController@excelPembayaran', 'as' => 'tampilExcelPembayaran']);
+	Route::post('/pembayaran/export/pdf', ['uses' => 'LoketController@PDFPembayaran', 'as' => 'tampilPDFPembayaran']);
+	Route::get('/pembayaran/print/detail/{id}', ['uses' => 'LoketController@printDetailPembayaran', 'as' => 'cetakDetailPembayaran']);
+	Route::get('/pembayaran/detail', ['uses' => 'LoketController@getIsiPembayaran', 'as' => 'ambilIsiPembayaran']);
+	Route::get('/data-pembayaran', ['uses' => 'LoketController@getDataPembayaran', 'as' => 'ambilDataPembayaran']);
 
 	//Obat
-	Route::get('/obat', ['uses' => 'LoketController@getObat', 'as' => 'ambilGetObat']);
+	Route::get('/obat', ['uses' => 'LoketController@getObat', 'as' => 'getObat']);
 	Route::post('/obat', ['uses' => 'LoketController@postObat', 'as' => 'postObat']);
 	Route::post('/obat/update', ['uses' => 'LoketController@postUpdateObat', 'as' => 'postUpdateObat']);
 	Route::get('/obat/getHapusObat', ['uses' => 'LoketController@getHapusObat', 'as' => 'getHapusObat']);
 
 	//Kategori Obat
-	Route::get('/getKategori', ['uses' => 'LoketController@getKategori', 'as' => 'ambilGetKategori']);
+	Route::get('/getKategori', ['uses' => 'LoketController@getKategori', 'as' => 'getKategori']);
 	Route::post('/postKategori', ['uses' => 'LoketController@postKategori', 'as' => 'postKategori']);
-	Route::get('/getHapusKategori', ['uses' => 'LoketController@getHapusKategori', 'as' => 'ambilGetHapusKategori']);
+	Route::get('/getHapusKategori', ['uses' => 'LoketController@getHapusKategori', 'as' => 'getHapusKategori']);
 	Route::post('/postUpdateKategori', ['uses' => 'LoketController@postUpdateKategoriObat', 'as' => 'postUpdateKategori']);
 });
 

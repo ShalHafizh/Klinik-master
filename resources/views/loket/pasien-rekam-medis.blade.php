@@ -325,10 +325,10 @@
 							jumlah:jumlah,
 							keterangan:keterangan
 						}
-						$.post("{{route('postRekamMedisPasien')}}", data, function(data) {
+						$.post("{{route('tampilRekamMedisPasien')}}", data, function(data) {
 							// console.log(data);
 							toastr.success('Success !', 'Data berhasil di simpan !');
-							location.href = "{{route('dokter.index')}}";
+							location.href = "{{route('loket.index')}}";
 						});
 					});
 				});

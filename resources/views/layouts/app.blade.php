@@ -94,7 +94,7 @@
               </li>
               <li><a href="{{ route('getPasien') }}"><i class="fa fa-users"></i>Data Pasien Terdaftar</a></li>
             @elseif(Auth::guard('dokter')->check())
-            <li><a href="{{ route('dokter.index') }}"><i class="fa fa-stethoscope "></i> Pemeriksaan Pasien</a>
+            <li><a href="{{ route('dokter.index') }}"><i class="fa fa-stethoscope "></i> Dashboard</a>
           </li>
           <li><a href="{{ route('getRekamMedis') }}"><i class="fa fa-list-alt"></i> Data Rekam Medis</a>
           <li><a href="{{ route('getPembayaran') }}"><i class="fa fa-file-text"></i> Data Pembayaran </a>
@@ -102,7 +102,10 @@
               <li><a href="{{ route('ambilGetKategori') }}"><i class="fa fa-bars"></i> Data Kategori Obat</a>
         </li>
         @elseif(Auth::guard('loket')->check())
-      <li><a href="{{ route('getObat') }}"><i class="fa fa-medkit"></i> Stok & Harga Obat</a>
+        <li><a href="{{ route('loket.index') }}"><i class="fa fa-home "></i> Dashboard</a>
+        </li>
+        <li><a href="{{ route('getObat') }}"><i class="fa fa-medkit"></i> Data Obat</a>
+        <li><a href="{{ route('ambilPembayaran') }}"><i class="fa fa-file-text"></i> Pembayaran </a>
       @endif
     </ul>
   </div>

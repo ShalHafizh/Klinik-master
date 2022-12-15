@@ -15,7 +15,7 @@
 </div>
 <div class="x_content">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<a href="{{route('dokter.index')}}" class="btn btn-danger btn-flat btn-md"><i class="fa fa-arrow-left"></i> Kembali</a>
+		<a href="{{route('loket.index')}}" class="btn btn-danger btn-flat btn-md"><i class="fa fa-arrow-left"></i> Kembali</a>
 		@if ($ada)
 			<button class="btn btn-primary btn-flat btn-md btn-konfirmasi pull-right">Konfirmasi pembayaran <i class="fa fa-credit-card"></i></button>
 		@endif

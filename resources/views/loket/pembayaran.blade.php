@@ -21,7 +21,7 @@
   {{-- Collapse excel --}}
   <div class="collapse" id="collapse-excel">
     <div class="well">
-      <form action="{{route('excelPembayaran', 'xlsx')}}" method="post" id="frm-excel" target="_blank">
+      <form action="{{route('tampilExcelPembayaran', 'xlsx')}}" method="post" id="frm-excel" target="_blank">
       {{csrf_field()}}
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div class="form-group">
@@ -45,7 +45,7 @@
   {{-- Collapse Pdf --}}
   <div class="collapse" id="collapse-pdf">
     <div class="well">
-      <form action="{{route('PDFPembayaran')}}" method="post" id="frm-pdf">
+      <form action="{{route('tampilPDFPembayaran')}}" method="post" id="frm-pdf">
       {{csrf_field()}}
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div class="form-group">
@@ -97,7 +97,7 @@
               <td>{{ date('d-m-Y', strtotime($data['created_at'])) }}</td>
               <td>{{ $data['biaya_pemeriksaan']}}</td>
               <td>
-                <a href="{{ route('printDetailPembayaran', $data['pasien']['id']) }}" target="_blank" class="btn btn-info btn-flat"><i class="fa fa-print"></i></a>
+                <a href="{{ route('cetakDetailPembayaran', $data['pasien']['id']) }}" target="_blank" class="btn btn-info btn-flat"><i class="fa fa-print"></i></a>
                 <a href="#modal-detail" data-toggle="modal" class="btn btn-success btn-flat btn-detail" data-id="{{$data['pasien']['id']}}"
                 ><i class="fa fa-search"></i></a>
                {{--  <a href="#modal-edit" data-toggle="modal" class="btn btn-warning btn-flat"><i class="fa fa-edit"></i></a> --}}
@@ -168,7 +168,7 @@
         if ($('tr#baris').length >= 1) {
           return true;
         }else{
-        $.get("{{route('getIsiPembayaran')}}", {pasien_id:pasien_id}, function(data) {
+        $.get("{{route('ambilIsiPembayaran')}}", {pasien_id:pasien_id}, function(data) {
           $.each(data, function(i, item) {
             var date = new Date();
             var hari = date.getDate(item.created_at);
