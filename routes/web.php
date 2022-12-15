@@ -90,23 +90,38 @@ Route::group(['prefix' => 'dokter'], function() {
 
 // Loket
 Route::group(['prefix' => 'loket'], function() {
-	Route::get('/', ['uses' => 'LoketController@index', 'as' => 'loket.obat']);
+	// Periksa Pasien
+	Route::get('/', ['uses' => 'LoketController@index', 'as' => 'loket.index']);
+	Route::get('/periksa/pasien/id={id}&nama={nama}&tgl={tgl}', ['uses' => 'LoketController@getRekamMedisPasien', 'as' => 'ambilRekamMedisPasien']);
+	Route::post('/periksa/pasien', ['uses' => 'LoketController@postRekamMedisPasien', 'as' => 'tampilRekamMedisPasien']);
+	Route::get('/getObat', ['uses' => 'LoketController@getObat', 'as' => 'ambilObat']);
+
+	// Rekam Medis
+	Route::get('/rekam-medis', ['uses' => 'LoketController@getRekamMedis', 'as' => 'getRekamMedis']);
+	Route::post('/rekam-medis', ['uses' => 'LoketController@postUpdateRekamMedis', 'as' => 'postUpdateRekamMedis']);
+	Route::post('/rekam-medis/excel/{type}', ['uses' => 'LoketController@exportExcelRekamMedis', 'as' => 'exportExcelRekamMedis']);
+	Route::post('/rekam-medis/export/pdf', ['uses' => 'LoketController@exportPDFRekamMedis', 'as' => 'exportPDFRekamMedis']);
+	Route::get('/rekam-medis/delete', ['uses' => 'LoketController@getDeleteRekamMedis', 'as' => 'getDeleteRekamMedis']);
+
+	// Pembayaran
+	Route::get('/pembayaran', ['uses' => 'LoketController@getPembayaran', 'as' => 'getPembayaran']);
+	Route::post('/pembayaran/excel/{type}', ['uses' => 'LoketController@excelPembayaran', 'as' => 'excelPembayaran']);
+	Route::post('/pembayaran/export/pdf', ['uses' => 'LoketController@PDFPembayaran', 'as' => 'PDFPembayaran']);
+	Route::get('/pembayaran/print/detail/{id}', ['uses' => 'LoketController@printDetailPembayaran', 'as' => 'printDetailPembayaran']);
+	Route::get('/pembayaran/detail', ['uses' => 'LoketController@getIsiPembayaran', 'as' => 'getIsiPembayaran']);
+	Route::get('/data-pembayaran', ['uses' => 'LoketController@getDataPembayaran', 'as' => 'getDataPembayaran']);
+
+	//Obat
+	Route::get('/obat', ['uses' => 'LoketController@getObat', 'as' => 'ambilGetObat']);
 	Route::post('/obat', ['uses' => 'LoketController@postObat', 'as' => 'postObat']);
 	Route::post('/obat/update', ['uses' => 'LoketController@postUpdateObat', 'as' => 'postUpdateObat']);
 	Route::get('/obat/getHapusObat', ['uses' => 'LoketController@getHapusObat', 'as' => 'getHapusObat']);
-	Route::get('/obat/excel/{type}', ['uses' => 'LoketController@exportExcelObat', 'as' => 'exportExcelObat']);
-	Route::post('/obat/export/Pdf', ['uses' => 'LoketController@exportPDFObat', 'as' => 'exportPDFObat']);
-	Route::get('/DetailResep/dokter_id={dokter_id}&pasien_id={pasien_id}', ['uses' => 'LoketController@getDataResep', 'as' => 'getDataResep']);
-	Route::post('/DetailResep/postResep', ['uses' => 'LoketController@postResep', 'as' => 'postResep']);
-	Route::post('/DetailResep/dokter_id={dokter_id}&pasien_id={pasien_id}/Print', ['uses' => 'LoketController@PrintDetailResep', 'as' => 'PrintDetailResep']);
-	Route::get('/getDetailResep', ['uses' => 'LoketController@getDetailResep', 'as' => 'getDetailResep']);
-	Route::get('/getKategori', ['uses' => 'LoketController@getKategori', 'as' => 'getKategori']);
+
+	//Kategori Obat
+	Route::get('/getKategori', ['uses' => 'LoketController@getKategori', 'as' => 'ambilGetKategori']);
 	Route::post('/postKategori', ['uses' => 'LoketController@postKategori', 'as' => 'postKategori']);
-	Route::get('/getHapusKategori', ['uses' => 'LoketController@getHapusKategori', 'as' => 'getHapusKategori']);
+	Route::get('/getHapusKategori', ['uses' => 'LoketController@getHapusKategori', 'as' => 'ambilGetHapusKategori']);
 	Route::post('/postUpdateKategori', ['uses' => 'LoketController@postUpdateKategoriObat', 'as' => 'postUpdateKategori']);
-	Route::get('/print-tagihan/tagihan={tagihan_id}&dokter_id={dokter_id}&pasien_id={pasien_id}', ['uses' => 'LoketController@getPrintTagihan', 'as' => 'loket.getPrintTagihan']);
-
-
 });
 
 

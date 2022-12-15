@@ -41,7 +41,7 @@ class AuthController extends Controller
                     Session::put('profesi', 'Loket');
                     Session::put('username', Auth::guard('loket')->user()->username);
                     Session::put('id', Auth::guard('loket')->user()->id);
-                    return redirect()->route('loket.obat');
+                    return redirect()->route('loket.index');
              }
 
             return redirect()->back()->with('error', 'Gagal Login');

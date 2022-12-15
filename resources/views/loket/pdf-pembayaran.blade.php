@@ -30,6 +30,8 @@
         <th>Nama Obat</th>
         <th>Jumlah</th>
         <th>Keterangan</th>
+        <th>Harga Obat</th>
+        <th>Biaya Pemeriksaan</th>
         </tr>
     </thead>
     <tbody>
@@ -41,6 +43,8 @@
               <td>{{ $data['obat']['nama'] }}</td>
               <td>{{ $data['jumlah'] }}</td>
               <td>{{ $data['keterangan'] }}</td>
+              <td>{{ $data['obat']}}</td>
+              <td>{{ $data['biaya_pemeriksaan']}}</td>
           </tr>
         @endforeach
     </tbody>
