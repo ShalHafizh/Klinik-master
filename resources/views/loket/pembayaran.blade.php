@@ -92,13 +92,13 @@
           @foreach($pembayaran as $data)
             <tr>
               <td>{{ $no++ }}</td>
-              <td>{{ $data['dokter']['nama'] }}</td>
-              <td>{{ $data['pasien']['nama'] }}</td>
+              <td>{{ $data['dokter_id']}}</td>
+              <td>{{ $data['pasien_id'] }}</td>
               <td>{{ date('d-m-Y', strtotime($data['created_at'])) }}</td>
               <td>{{ $data['biaya_pemeriksaan']}}</td>
               <td>
-                <a href="{{ route('cetakDetailPembayaran', $data['pasien']['id']) }}" target="_blank" class="btn btn-info btn-flat"><i class="fa fa-print"></i></a>
-                <a href="#modal-detail" data-toggle="modal" class="btn btn-success btn-flat btn-detail" data-id="{{$data['pasien']['id']}}"
+                <a href="{{ route('cetakDetailPembayaran', $data['pasien_id']) }}" target="_blank" class="btn btn-info btn-flat"><i class="fa fa-print"></i></a>
+                <a href="#modal-detail" data-toggle="modal" class="btn btn-success btn-flat btn-detail" data-id="{{$data['pasien_id']}}"
                 ><i class="fa fa-search"></i></a>
                {{--  <a href="#modal-edit" data-toggle="modal" class="btn btn-warning btn-flat"><i class="fa fa-edit"></i></a> --}}
               </td>

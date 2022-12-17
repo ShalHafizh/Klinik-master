@@ -77,6 +77,7 @@
 						<th>Nama</th>
 						<th>Kandungan</th>
 						<th>Kategori</th>
+						<th>Harga</th>
 						<th>Stok Obat</th>
 						<th>Action</th>
 					</tr>
@@ -89,6 +90,7 @@
 						<td>{{$data['nama']}}</td>
 						<td>{{$data['kandungan']}}</td>
 						<td>{{$data['kategori']['kategori']}}</td>
+						<td>{{$data['harga']}}</td>
 						<td>
 							@if ($data['status'] == 'ada')
 							<span class="btn btn-flat btn-success btn-block">Tersedia <i class="fa fa-check"></i></span>
