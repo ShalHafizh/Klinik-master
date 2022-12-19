@@ -81,7 +81,7 @@
             <tr>
               <th>No.</th>
               <th>Dokter</th>
-              <th>Nama Pasien</th>
+              <th>Pasien</th>
               <th>Tanggal Pemeriksaan</th>
               <th>Biaya</th>
               <th>Action</th>

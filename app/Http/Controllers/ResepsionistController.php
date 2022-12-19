@@ -47,8 +47,9 @@ class ResepsionistController extends Controller
     }
 
     public function validasi(Request $request){
-       $qr = $request->qr_code;
-       $data = 'Alhamdulillah ga error';
+        $pasien = Pasien::with('no_antrian')->whereDate('created_at', '=', date('Y-m-d'))->where('status', '=', 'antri')->get();
+        $qr = $request->qr_code;
+       $data = $pasien;
        if($qr == $data){
         return response()->json([
             'status' => 200,
