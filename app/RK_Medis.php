@@ -30,4 +30,8 @@ class RK_Medis extends Model
     public function pasien() {
     	return $this->belongsto('App\Pasien');
     }
+
+	public function dokter() {
+    	return $this->belongsto('App\Dokter');
+    }
 }

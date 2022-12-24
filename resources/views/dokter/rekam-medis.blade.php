@@ -8,70 +8,111 @@
       <h3>Total Rekam Medis</h3>
     </div>
   </div>
-  <div class="animated flipInY col-lg-6 col-md-6 col-sm-12 col-xs-12">
-    <div class="tile-stats">
-      <div class="icon"><i class="fa fa-list-alt"></i></div>
-      <div class="count">{{ count($HariIni) }}</div>
-      <h3>Total Rekam Medis hari ini</h3>
-    </div>
-  </div>
 </div>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <a class="btn btn-success" role="button" data-toggle="collapse" href="#collapse-excel" aria-expanded="false" aria-controls="collapse-excel">
-    Export to excel <i class="fa fa-file-excel-o"></i>
-  </a>
-  <a class="btn btn-danger" role="button" data-toggle="collapse" href="#collapse-pdf" aria-expanded="false" aria-controls="collapse-pdf">
-    Export to pdf <i class="fa fa-file-pdf-o"></i>
-  </a>
-
-  {{-- Collapse excel --}}
-  <div class="collapse" id="collapse-excel">
-    <div class="well">
-      <form action="{{ route('exportExcelRekamMedis', 'xlsx') }}" method="post" id="frm-excel" target="_blank">
-      {{ csrf_field() }}
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-          <div class="form-group">
-          <label>Pilih Bulan ?</label>
-          <input type="text" name="bulan" class="form-control bulan">
-        </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-          <div class="form-group">
-          <label>Pilih Tahun ?</label>
-          <input type="text" name="tahun" class="form-control tahun">
-        </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <button type="submit" class="btn btn-success btn-block btn-flat">Export to excel <i class="fa fa-file-excel-o"></i></button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  {{-- Collapse Pdf --}}
-  <div class="collapse" id="collapse-pdf">
-    <div class="well">
-      <form action="{{route('exportPDFRekamMedis')}}" method="post" id="frm-pdf" target="_blank">
-      {{ csrf_field() }}
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-          <div class="form-group">
-          <label>Pilih Bulan ?</label>
-          <input type="text" name="bulan" class="form-control bulan">
-        </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-          <div class="form-group">
-          <label>Pilih Tahun ?</label>
-          <input type="text" name="tahun" class="form-control tahun">
-        </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <button type="submit" class="btn btn-danger btn-block btn-flat">Export to pdf <i class="fa fa-file-pdf-o"></i></button>
-        </div>
-      </form>
-    </div>
-  </div>
+    <a class="btn btn-primary btn-flat" role="button" data-toggle="collapse" href="#collapse-tambah" aria-expanded="false" aria-controls="collapse-tambah">
+			Tambah Rekam Medis <i class="fa fa-plus"></i>
+		</a>
+    {{-- collapse tambah --}}
+		<div class="collapse" id="collapse-tambah">
+			<div class="well">
+				<form method="post" id="frm-tambah">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<div class="form-group">
+							<label>ID Pasien</label>
+							<input type="text" name="pasien_id" class="form-control">
+						</div>
+					</div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<div class="form-group">
+							<label>Nama Pasien</label>
+							<input type="text" name="nama" class="form-control">
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="form-group">
+							<label>Tanggal Lahir</label>
+							<input type="date" name="tgl_lahir" class="form-control">
+						</div>
+					</div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<div class="form-group">
+							<label>Dokter</label>
+							<input type="text" name="dokter_id" class="form-control">
+						</div>
+					</div>
+          <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+            <div class="form-group">
+              <label>Berat Badan</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="bb" id="bb">
+                <div class="input-group-addon">Kg</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+            <div class="form-group">
+              <label>Tensi Darah</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="tensi" id="tensi">
+                <div class="input-group-addon">mmHg</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+            <div class="form-group">
+              <label>Tinggi Badan</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="tb" id="tb">
+                <div class="input-group-addon">Cm</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+            <div class="form-group">
+              <label>Buta Warna</label>
+              <div class="radio">
+                <label style="margin-left: 10px;">
+                  <input type="radio" name="bw" value="ya" id="ya">
+                  Ya
+                </label>
+                <label>
+                  <input type="radio" name="bw" value="tidak" id="tidak">
+                  Tidak
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+              <label>Keluhan</label>
+              <input type="text" name="keluhan" class="form-control" id="keluhan">
+            </div>
+            <div class="form-group">
+              <label>Anamnesis</label>
+              <textarea class="form-control" id="anamnesis" name="anamnesis" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Diagnosa</label>
+              <input type="text" name="diagnosa" class="form-control" id="diagnosa">
+            </div>
+            <div class="form-group">
+              <label>Tindakan</label>
+              <input type="text" name="tindakan" class="form-control" id="tindakan">
+            </div>
+            <div class="form-group">
+              <label>Keterangan</label>
+              <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
+            </div>
+          </div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<button type="submit" class="btn btn-flat btn-primary btn-block">Simpan <i class="fa fa-save"></i></button>
+					</div>
+				</div>
+		</div>
+				</div>
+		</div>
     <div class="x_panel">
       <div class="x_title">
         <h2>Data Rekam Medis</h2>
@@ -86,7 +127,13 @@
           <thead>
             <tr>
               <th>No.</th>
+              <th>ID</th>
               <th>Nama Pasien</th>
+              <th>Tanggal Lahir</th>
+              <th>Diagnosa</th>
+              <th>Keluhan</th>
+              <th>Anamnesis</th>
+              <th>Keterangan</th>
               <th>Tanggal Periksa</th>
               <th>Action</th>
             </tr>
@@ -96,7 +143,13 @@
           @foreach($rekamMedis as $data)
             <tr>
               <td>{{$no++}}</td>
-              <td>{{$data['pasien']['nama']}}</td>
+              <td>{{$data['pasien_id']}}</td>
+              <td>{{$data['nama']}}</td>
+              <td>{{$data['tgl_lahir']}}</td>
+              <td>{{$data['diagnosa']}}</td>
+              <td>{{$data['keluhan']}}</td>
+              <td>{{$data['anamnesis']}}</td>
+              <td>{{$data['keterangan']}}</td>
               <td>{{date('d-m-Y', strtotime($data['created_at']))}}</td>
               <td>
                 <a href="#modal-detail" class="btn btn-info btn-flat btn-detail" data-toggle="modal"
@@ -357,6 +410,15 @@
           location.reload();
         });
       });
+
+      $('#frm-tambah').on('submit', function(e) {
+			e.preventDefault();
+			var data = $(this).serialize();
+			$.post("{{route('postUpdateRekamMedis')}}", data, function(data) {
+				toastr.success('Success !', 'Data berhasil di simpan !');
+				location.reload();
+			});
+		});
 
       $('#datatable').on('click','.btn-delete', function(event) {
         event.preventDefault();

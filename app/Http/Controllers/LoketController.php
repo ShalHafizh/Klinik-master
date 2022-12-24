@@ -19,12 +19,10 @@ class LoketController extends Controller
     	 $this->middleware('loket');
     }
 
-    public function index(Pasien $pasien) {   
-        $antri = $pasien->with('no_antrian')->whereDate('created_at', date('Y-m-d'))->where(['status' => 'antri', 'layanan_dokter' => Session::get('id')])->get();
+    public function index() {   
         $obat = Obat::with('kategori')->get()->toArray();
-        $pasien = $pasien->where('layanan_dokter', Session::get('id'))->whereDate('created_at', date('Y-m-d'))->get();
         $kategori = KategoriObat::get()->toArray();
-    	return view('loket.index', ['antri'=> $antri, 'obat' => $obat, 'pasien' => $pasien, 'kategori' => $kategori]);
+    	return view('loket.obat', [ 'obat' => $obat,  'kategori' => $kategori]);
     }
 
     public function getPembayaran() {

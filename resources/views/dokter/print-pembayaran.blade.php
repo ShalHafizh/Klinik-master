@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Data Pembayaran | Pasien : {{ $pembayaran[0]['pasien']['nama'] }}</title>
+    <title>Data Pemeriksaan | Pasien : {{ $pembayaran[0]['pasien']['nama'] }}</title>
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +20,7 @@
     </style> --}}
     <body onload="window.print()">
     <div class="page-header">
-      <h1>Data Pembayaran | <small>Pasien : {{ $pembayaran[0]['pasien']['nama'] }}</small></h1>
+      <h1>Data Pemeriksaan | <small>Pasien : {{ $pembayaran[0]['pasien']['nama'] }}</small></h1>
     </div>
   <table class="table table-bordered table-striped">
     <thead>

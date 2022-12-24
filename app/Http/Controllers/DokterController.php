@@ -19,63 +19,18 @@ class DokterController extends Controller
     	 $this->middleware('dokter');
     }
 
-    public function index(Pasien $pasien) {   
-        $antri = $pasien->with('no_antrian')->whereDate('created_at', date('Y-m-d'))->where(['status' => 'antri', 'layanan_dokter' => Session::get('id')])->get();
+    public function index() {   
         $obat = Obat::with('kategori')->get()->toArray();
-        $pasien = $pasien->where('layanan_dokter', Session::get('id'))->whereDate('created_at', date('Y-m-d'))->get();
         $kategori = KategoriObat::get()->toArray();
-    	return view('dokter.index', ['antri'=> $antri, 'obat' => $obat, 'pasien' => $pasien, 'kategori' => $kategori]);
+    	return view('dokter.index', ['obat' => $obat, 'kategori' => $kategori]);
     }
 
-    public function getRekamMedisPasien($pasien_id, $nama, $tgl_lahir) {
-        $dokter_id = $this->getDokterId();
-        $pasien = Pasien::find($pasien_id);
-        $rekamMedis =  RK_Medis::where(['nama' => $nama, 'dokter_id' => $dokter_id, 'tgl_lahir' => $tgl_lahir])->get()->toArray();
-        // dd($rekamMedis);
-        $umur = new \DateTime($pasien->tgl_lahir);
-        $ubah = new \DateTime();
-        $umur = $ubah->diff($umur);
-        $obat = Obat::get()->toArray();
-        $id = RK_Medis::select('id')->get()->last();
-            if ($id == null) {
-                $id = 1;
-            }
-        $id  = substr($id['id'], 4);
-        $id = (int) $id;
-        $id += 1;
-        $id  = "RK" . str_pad($id, 4, "0", STR_PAD_LEFT);
-        // dd($id);
-        return view('dokter.pasien-rekam-medis', ['pasien' => $pasien, 'rekamMedis' => $rekamMedis, 'obat' => $obat, 'id' => $id, 'nama' => $nama, 'tgl_lahir' => $tgl_lahir, 'umur' => $umur]);
-    }
-
-    public function postRekamMedisPasien(Request $request) {
-        if ($request->ajax()) {
-            $rekamMedis = RK_Medis::create([
-                'id' => $request->id,
-                'nama' => $request->nama,
-                'bb' => $request->bb,
-                'tb' => $request->tb,
-                'tensi' => $request->tensi,
-                'bw' => $request->bw,
-                'pasien_id' => $request->pasien_id,
-                'dokter_id' => $request->dokter_id,
-                'diagnosa' => $request->diagnosa,
-                'keluhan' => $request->keluhan,
-                'anamnesis' => $request->anamnesis,
-                'tindakan' => $request->tindakan,
-                'keterangan' => $request->deskripsi,
-                'alergi_obat' => $request->alergi_obat,
-            ]);
-
-
-            return response()->json($rekamMedis);
-        }
-    }
 
     public function getRekamMedis() {
-            $rekamMedis = RK_Medis::with('pasien')->where('dokter_id', Session::get('id'))->get()->toArray();
-            $HariIni = RK_Medis::where('dokter_id', Session::get('id'))->whereDate('created_at', date('Y-m-d'))->get()->toArray();
-    	return view('dokter.rekam-medis', ['rekamMedis' => $rekamMedis, 'HariIni' => $HariIni]);
+            $rekamMedis = RK_Medis::with('pasien', 'dokter')->get()->toArray();
+            $pasien = Pasien::get()->toArray();
+            $dokter = Dokter::get()->toArray();
+    	return view('dokter.rekam-medis', ['rekamMedis' => $rekamMedis, 'pasien' => $pasien, 'dokter' => $dokter]);
     }
 
     public function postUpdateRekamMedis(Request $request) {
@@ -147,7 +102,7 @@ class DokterController extends Controller
             $pembayaran = Pembayaran::with(['dokter','pasien', 'obat'])->where('dokter_id', Session::get('id'))->orderBy('created_at', 'desc')->groupBy('pasien_id')->get()->toArray();
             $hariIni = Pembayaran::where('dokter_id', Session::get('id'))->whereDate('created_at', date('y-m-d'))->get()->toArray();
             $dokter = Pembayaran::where('dokter_id', Session::get('id'))->get()->toArray();
-    	return view('dokter.pembayaran', ['pembayaran' => $pembayaran, 'hariIni' => $hariIni, 'dokter' => $dokter]);
+    	return view('dokter.pemeriksaan', ['pembayaran' => $pembayaran, 'hariIni' => $hariIni, 'dokter' => $dokter]);
     }
 
     public function postPembayaran(Request $request) {

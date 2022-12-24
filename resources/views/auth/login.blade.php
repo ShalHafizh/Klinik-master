@@ -47,10 +47,10 @@
                     <div class="container" style="text-align: center;margin-top: 10px">
                       <br>
                       @include('layouts.alert')
-                      <a data-toggle="modal" href='#modal-resepsionist'><img src="images/user-resepsionist.jpg" height="150px" width="150px;"></a>
-                      <a data-toggle="modal" href='#modal-dokter'><img src="images/user-dokter.jpg" height="150px" width="150px;"></a>
-                      <a data-toggle="modal" href='#modal-loket'><img src="images/user-apoteker.jpg" height="150px" width="150px;"></a>
-                      <a data-toggle="modal" href='#modal-admin'><img src="images/user-admin.jpg" height="150px" width="150px;"></a>
+                      <a data-toggle="modal" href='#modal-resepsionist'><img src="images/resepsionist.png" height="130px" width="130px;"></a>
+                      <a data-toggle="modal" href='#modal-dokter'><img src="images/dokter.png" height="130px" width="130px;"></a>
+                      <a data-toggle="modal" href='#modal-loket'><img src="images/loket.png" height="130px" width="130px;"></a>
+                      <a data-toggle="modal" href='#modal-admin'><img src="images/admin.png" height="130px" width="130px;"></a>
                 </div>
                   </div>
                   </div>

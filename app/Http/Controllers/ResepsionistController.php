@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Dokter;
 use App\NoAntrian;
 use App\Pasien;
-use App\Data;
-use App\TransaksiPasien;
-use App\KategoriObat;
+use App\Agama;
+use App\Pekerjaan;
+use App\Goldar;
 use Barryvdh\DomPDF\PDF;
 use Excel;
 use Illuminate\Database\QueryException;
@@ -21,9 +21,6 @@ class ResepsionistController extends Controller
     }
 
     public function index() {
-            $pasien = Pasien::with('no_antrian')->whereDate('created_at', '=', date('Y-m-d'))->where('status', '=', 'antri')->get();
-            $total = Pasien::where('status', 'selesai')->get()->toArray();
-            $bulan = Pasien::where('status', 'selesai')->whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get()->toArray();
             $dokter = Dokter::with('spesialis')->get()->toArray();
             $id = Pasien::select('id')->get()->last();
             if ($id == null) {
@@ -34,10 +31,7 @@ class ResepsionistController extends Controller
             $id += 1;
             $id  = "PS" . str_pad($id, 4, "0", STR_PAD_LEFT);
     	return view('resepsionist.index', [
-            'pasien' => $pasien,
             'id' => $id,
-            'total' => $total,
-            'bulan' => $bulan,
             'dokter' => $dokter
         ]);
     }
@@ -62,11 +56,11 @@ class ResepsionistController extends Controller
     }
 
     public function getPasien() {
-        $HariIni = Pasien::whereDate('created_at', '=', date('Y-m-d'))->where('status', '=', 'antri')->get();
-        $bulan = Pasien::whereMonth('created_at', '=', date('m'))->whereYear('created_at', '=', date('Y'))->get()->toArray();
-        $pasien = Pasien::orderBy('created_at', 'desc')->groupBy('nama')->get()->toArray();
-        $dokter = Dokter::with('spesialis')->get()->toArray();
-    	return view('resepsionist.pasien.index', ['pasien'=> $pasien, 'bulan' => $bulan, 'HariIni' => $HariIni, 'dokter' => $dokter]);
+        $pasien = Pasien::with('agama', 'pekerjaan', 'golongan_darah')->orderBy('created_at', 'desc')->groupBy('nama')->get()->toArray();
+    	$agama = Agama::get()->toArray();
+        $pekerjaan = Pekerjaan::get()->toArray();
+        $goldar = Goldar::get()->toArray();
+        return view('resepsionist.pasien.index', ['pasien'=> $pasien, 'agama' => $agama, 'pekerjaan' => $pekerjaan, 'golongan_darah', $goldar]);
     }
 
     public function postPendaftaranPasien(Request $request) {
