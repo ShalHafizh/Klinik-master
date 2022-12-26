@@ -33,6 +33,10 @@
     <link href="{{ URL::to('bower_components/switchery/dist/switchery.min.css') }}" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="{{ URL::to('css/custom.min.css') }}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
   </head>
   <body class="nav-md">
     <div class="container body">
