@@ -61,6 +61,8 @@ Route::group(['prefix' => 'dokter'], function() {
 	// Rekam Medis
 	Route::get('/rekam-medis', ['uses' => 'DokterController@getRekamMedis', 'as' => 'getRekamMedis']);
 	Route::post('/rekam-medis', ['uses' => 'DokterController@postUpdateRekamMedis', 'as' => 'postUpdateRekamMedis']);
+	Route::post('/rekam-medis/get-pasien', ['uses' => 'DokterController@getDetailPasien', 'as' => 'getDetailPasien']);
+	Route::post('/rekam-medis/pasien', ['uses' => 'DokterController@postTambahRekamMedis', 'as' => 'postTambahRekamMedis']);
 	Route::post('/rekam-medis/excel/{type}', ['uses' => 'DokterController@exportExcelRekamMedis', 'as' => 'exportExcelRekamMedis']);
 	Route::post('/rekam-medis/export/pdf', ['uses' => 'DokterController@exportPDFRekamMedis', 'as' => 'exportPDFRekamMedis']);
 	Route::get('/rekam-medis/delete', ['uses' => 'DokterController@getDeleteRekamMedis', 'as' => 'getDeleteRekamMedis']);

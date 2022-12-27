@@ -10,4 +10,19 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function findDataWhere($model, $where)
+    {
+        $data = $model::where($where)->first();
+        if ($data) {
+            return $data;
+        } else {
+            $return   = response()->json([
+                'code' => '400',
+                'status' => 'Failed',
+                'messages' => 'Data tidak ditemukan'
+            ]);
+            $return->throwResponse();
+        }
+    }
 }
