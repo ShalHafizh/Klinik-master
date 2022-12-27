@@ -1,6 +1,6 @@
 /*
 SQLyog Community v13.1.7 (64 bit)
-MySQL - 10.4.25-MariaDB : Database - klinik
+MySQL - 10.4.25-MariaDB : Database - test
 *********************************************************************
 */
 
@@ -12,9 +12,9 @@ MySQL - 10.4.25-MariaDB : Database - klinik
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`klinik` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`test` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
-USE `klinik`;
+USE `test`;
 
 /*Table structure for table `admins` */
 
@@ -29,12 +29,13 @@ CREATE TABLE `admins` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `admins` */
 
 insert  into `admins`(`id`,`username`,`password`,`level`,`created_at`,`updated_at`,`remember_token`) values 
-(1,'admin','$2y$10$BBJrdZ/QTX7V8CSdKZetT.V447hYpZ39vblYMrE33ldNzOxc4.15C','admin','2017-08-18 02:51:09','2017-08-18 02:51:09',NULL);
+(1,'admin','$2y$10$BBJrdZ/QTX7V8CSdKZetT.V447hYpZ39vblYMrE33ldNzOxc4.15C','admin','2017-08-18 09:51:09','2017-08-18 09:51:09',NULL),
+(2,'admin','$2y$10$KNL9CNaTLv479ePqmRRsWuwFFerJI1i2uyRt6DWL0hTjKMhpZLCeO','admin','2022-11-18 21:26:30','2022-11-18 21:26:30',NULL);
 
 /*Table structure for table `agama` */
 
@@ -83538,7 +83539,9 @@ CREATE TABLE `dokters` (
 /*Data for the table `dokters` */
 
 insert  into `dokters`(`id`,`username`,`password`,`nama`,`alamat`,`tgl_lahir`,`spesialis_id`,`level`,`photo`,`created_at`,`updated_at`,`remember_token`) values 
-('DK001','dokter','$2y$10$z/CzIyF3V4bZEey.DeUZn.3f1WhY1uHL2PdwDYQ3YkCF.ztnE63zu','dokter','sidoarjo','1993-07-20',1,'dokter','user-dokter.jpg','2017-08-18 02:54:28','2022-12-06 19:51:47',NULL);
+('DK001','dokterkita','$2y$10$LDM9s5vPllMmoWa/trmGw.2Grdtp3C22flp7W18rjpgmTPFmGQWfO','crysna si biru','sidoarjo','1993-07-20',1,'dokter','user-dokter.jpg','2017-08-18 09:54:28','2017-08-18 09:54:28',NULL),
+('DK002','oz','$2y$10$W/j0bFXHdCmnISRzMC2g/.upd6XKofnQ3bcq.MMXRcJ8jFOURVBtu','dr. oz','jl. mayjend sungkono no 10 Mojokerto','1999-08-03',2,'dokter','user-dokter.jpg','2017-08-21 20:55:28','2017-08-21 20:55:28',NULL),
+('DK003','dokter','$2y$10$v8SSsb/9eVCXRf7HXdetB.mllNG/KMP3/iJ.IvmOJtf5m4SR20vrO','Carli Satterfield','2933 Satterfield Camp Suite 894\nHaleyborough, IA 96225-4536','1982-07-22',4,'dokter','','2022-11-18 21:26:32','2022-11-18 21:26:32',NULL);
 
 /*Table structure for table `dusun` */
 
@@ -84811,6 +84814,24 @@ insert  into `dusun`(`id`,`nama`,`id_desa`) values
 ('351710200505','NGUDI','3517102005'),
 ('351714200204','Sidomulyo','3517142002');
 
+/*Table structure for table `failed_jobs` */
+
+DROP TABLE IF EXISTS `failed_jobs`;
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `failed_jobs` */
+
 /*Table structure for table `golongan_darah` */
 
 DROP TABLE IF EXISTS `golongan_darah`;
@@ -84844,7 +84865,7 @@ DROP TABLE IF EXISTS `hak_akses`;
 
 CREATE TABLE `hak_akses` (
   `id` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` char(25) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -84858,17 +84879,37 @@ CREATE TABLE `hak_akses` (
 
 /*Data for the table `hak_akses` */
 
+insert  into `hak_akses`(`id`,`nama`,`username`,`password`,`level`,`status`,`created_at`,`updated_at`,`created_by`,`updated_by`) values 
+('USR0000001','','crysna','$2y$10$3egoGPwX5WmrXTG/KzULKOxkI4fYIcOf6ui216LSwyXFlYZ61H7P2','pasien','1','2022-12-07 13:09:19','2022-12-07 13:09:19','',''),
+('USR0000002','','crysnawima','$2y$10$maOcPp1Wwhe3wuIAFdt.suqowXb8bfJ.f0Bbklf10DdrEGX3zaPOy','pasien','1','2022-12-07 13:17:27','2022-12-07 13:17:27','',''),
+('USR0000003','','saya','$2y$10$Tf6ZpwLYlTsU6VgkH4E7iOe1aboc//QaUsC.7Ld98jSaBVqe8.y9S','pasien','1','2022-12-09 01:54:44','2022-12-09 01:54:44','',''),
+('USR0000004','','west','$2y$10$KE4oLSja9A4LQ8Gefhv4yusstPVj31cT0NoXkkBiYdCXcwkVI3G8.','pasien','1','2022-12-09 02:01:32','2022-12-09 02:01:32','',''),
+('USR0000005','','sy2','$2y$10$9jiSIVHCz6a5isTeuCZVOeSGsCs1uw8lKZ1nDFLBygWS/aStMsV1i','pasien','1','2022-12-09 02:09:01','2022-12-09 02:09:01','',''),
+('USR0000006','','gigi','$2y$10$nO3F/fh6BxXMP7sh8CYmW.Bd4gYcNWxM1u80RWDmx0BuHOnJNNEmm','pasien','1','2022-12-09 02:09:04','2022-12-09 02:09:04','',''),
+('USR0000007','','gigik','$2y$10$.P85RKYPQG6yjD3/nBb7c.w5Y4i07/wARGVh6yGlmXiPddt9YMVA6','pasien','1','2022-12-09 02:09:48','2022-12-09 02:09:48','',''),
+('USR0000008','','fir','$2y$10$dXxFi52j1H5f4qtVptfsLOumyNZs.qRnnM9vfUyXrJ4V/0AuFJSji','pasien','1','2022-12-09 02:10:32','2022-12-09 02:10:32','',''),
+('USR0000009','','liyane','$2y$10$qWoHmNpa4UEAbJzEa5uG/uHupTVC6QrnoVHc5ItxDvHaQAS4Ls7IO','pasien','1','2022-12-09 02:19:08','2022-12-09 02:19:08','',''),
+('USR0000010','','liyaneok','$2y$10$D2ga6WEcLFMGuwGmbuABVuK6nGtXYuEn0twIzbS.OXe6wXYZCPfZW','pasien','1','2022-12-09 02:19:27','2022-12-09 02:19:27','',''),
+('USR0000011','','lili','$2y$10$WmIieUYteBkDsS3vuyvbNu8xDQzDy3GyujV5Ktg1j70ufWjjmTJVm','pasien','1','2022-12-09 02:19:47','2022-12-09 02:19:47','','');
+
 /*Table structure for table `jadwal_dokter` */
 
 DROP TABLE IF EXISTS `jadwal_dokter`;
 
 CREATE TABLE `jadwal_dokter` (
-  `DOKTER_ID` int(11) NOT NULL,
+  `DOKTER_ID` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `JADWAL_POLI_ID` int(11) NOT NULL,
   PRIMARY KEY (`DOKTER_ID`,`JADWAL_POLI_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `jadwal_dokter` */
+
+insert  into `jadwal_dokter`(`DOKTER_ID`,`JADWAL_POLI_ID`) values 
+('DK001',1),
+('DK001',4),
+('DK001',5),
+('DK002',2),
+('DK003',3);
 
 /*Table structure for table `jadwal_poli` */
 
@@ -84880,22 +84921,35 @@ CREATE TABLE `jadwal_poli` (
   `JAM_BUKA` time NOT NULL,
   `JAM_TUTUP` time NOT NULL,
   `KUOTA` int(11) NOT NULL,
+  `ID_POLI` int(11) NOT NULL,
+  `created_by` varchar(20) NOT NULL,
+  `updated_by` varchar(20) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `jadwal_poli` */
+
+insert  into `jadwal_poli`(`ID`,`HARI_BUKA`,`JAM_BUKA`,`JAM_TUTUP`,`KUOTA`,`ID_POLI`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
+(1,'1 - Senin','07:00:00','10:00:00',5,1,'','','2022-12-08 21:01:55','2022-12-08 21:01:55'),
+(2,'1 - Senin','10:00:00','17:00:00',5,1,'','','2022-12-08 21:01:55','2022-12-08 21:01:55'),
+(3,'2 - Selasa','07:00:00','10:00:00',5,2,'','','2022-12-08 21:03:12','2022-12-08 21:03:12'),
+(4,'2 - Selasa','10:00:00','17:00:00',5,2,'','','2022-12-08 21:03:12','2022-12-08 21:03:12'),
+(5,'3 - Rabu','07:00:00','10:00:00',5,1,'','','2022-12-16 10:02:19','2022-12-16 10:02:19'),
+(6,'5 - Jumat','07:00:00','10:00:00',5,1,'','','2022-12-16 16:51:05','2022-12-16 16:51:05');
 
 /*Table structure for table `kabupaten` */
 
 DROP TABLE IF EXISTS `kabupaten`;
 
 CREATE TABLE `kabupaten` (
-  `id` char(30) NOT NULL DEFAULT '',
-  `nama` varchar(100) NOT NULL DEFAULT '',
-  `id_propinsi` char(30) NOT NULL DEFAULT '',
-  `jenis` char(30) NOT NULL DEFAULT '',
+  `id` char(30) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `nama` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `id_propinsi` char(30) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `jenis` char(30) CHARACTER SET utf8 NOT NULL DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
 
 /*Data for the table `kabupaten` */
 
@@ -92665,7 +92719,7 @@ CREATE TABLE `lokets` (
 /*Data for the table `lokets` */
 
 insert  into `lokets`(`id`,`username`,`password`,`nama`,`alamat`,`tgl_lahir`,`level`,`photo`,`created_at`,`updated_at`,`remember_token`) values 
-('AP002','loket','$2y$10$bsaYtcUE6MGG0I8UGGIv/e8MR6lUZVQYpfRdmdBRpuLk2GNCPX8EC','loket','Surabaya','2000-01-17','loket','user-apoteker.jpg','2022-12-06 20:38:09','2022-12-06 20:38:09',NULL);
+('AP002','loket','$2y$10$ehY0pAEjXBY9LI9LfbQorO1V6l3XOl7bKOIJNTAW7x8ttyupdCUmS','loket','Surabaya','2000-01-17','loket','user-apoteker.jpg','2022-12-06 20:38:09','2022-12-21 19:12:55',NULL);
 
 /*Table structure for table `migrations` */
 
@@ -92676,9 +92730,15 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `migrations` */
+
+insert  into `migrations`(`id`,`migration`,`batch`) values 
+(1,'2014_10_12_000000_create_users_table',1),
+(2,'2014_10_12_100000_create_password_resets_table',1),
+(3,'2019_08_19_000000_create_failed_jobs_table',1),
+(4,'2019_12_14_000001_create_personal_access_tokens_table',1);
 
 /*Table structure for table `no_antrians` */
 
@@ -92687,7 +92747,12 @@ DROP TABLE IF EXISTS `no_antrians`;
 CREATE TABLE `no_antrians` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pasien_id` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_poli` int(11) NOT NULL,
+  `no` int(11) NOT NULL,
+  `tgl_rencana` date NOT NULL,
+  `jam_awal` time NOT NULL,
+  `jam_akhir` time NOT NULL,
+  `status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -92709,14 +92774,13 @@ CREATE TABLE `obats` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `obats` */
 
 insert  into `obats`(`id`,`nama`,`kandungan`,`kategori_id`,`harga`,`status`,`created_at`,`updated_at`) values 
-(1,'mixagrip','amoxilin',1,2000.00,'ada','2017-08-18 10:21:02','2022-12-01 14:26:35'),
-(2,'bodrex','paracetamol',1,2000.00,'habis','2017-08-21 14:08:42','2022-12-02 09:59:55'),
-(4,'Paracetamol','micin',2,50000.00,'ada','2022-12-06 20:46:30','2022-12-06 20:46:30');
+(1,'mixagrip','amoxilin',1,2000.00,'habis','2017-08-18 10:21:02','2017-08-22 10:30:14'),
+(2,'bodrex','paracetamol',2,2000.00,'ada','2017-08-21 14:08:42','2017-08-21 14:08:42');
 
 /*Table structure for table `pasiens` */
 
@@ -92724,28 +92788,54 @@ DROP TABLE IF EXISTS `pasiens`;
 
 CREATE TABLE `pasiens` (
   `id` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `jenis_kelamin` enum('pria','wanita') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alamat` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tgl_lahir` date NOT NULL,
-  `telp` varchar(13) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pekerjaan` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('antri','obat','selesai') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `layanan_dokter` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `NIK` char(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tgl_lahir` date DEFAULT NULL,
+  `tempat_lahir` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jenis_kelamin` enum('Laki-Laki','Perempuan') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_desa` char(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_pekerjaan` char(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_agama` char(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_golongan_darah` char(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telp` varchar(13) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status_perkawinan` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alergi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `created_by` char(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_by` char(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `pasiens` */
 
-insert  into `pasiens`(`id`,`nama`,`jenis_kelamin`,`alamat`,`tgl_lahir`,`telp`,`pekerjaan`,`status`,`layanan_dokter`,`created_at`,`updated_at`) values 
-('PS0001','opick','pria','jl. hasanuddin no.40 Jakarta','1998-06-23','085707799317','penyanyi','selesai','DK001','2017-08-22 11:22:18','2017-08-22 11:32:39'),
-('PS0003','cesar','pria','jl. imam bonjol no.40 jakarta','1994-10-20','08130305758','berjoget','selesai','DK002','2017-08-22 11:37:02','2017-08-22 11:39:39'),
-('PS0004','cesar','pria','jl. imam bonjol no.40 jakarta','1994-10-20','08130305758','berjoget','antri','DK002','2022-11-28 20:31:15','2022-11-28 20:31:15'),
-('PS0005','cesar','pria','jl. imam bonjol no.40 jakarta','1994-10-20','08130305758','berjoget','antri','DK002','2022-11-28 20:31:21','2022-11-28 20:31:21'),
-('PS0006','cesar','pria','jl. imam bonjol no.40 jakarta','1994-10-20','08130305758','berjoget','antri','DK001','2022-12-09 11:11:30','2022-12-09 11:11:30'),
-('PS0007','opick','pria','jl. hasanuddin no.40 Jakarta','1998-06-23','085707799317','penyanyi','antri','DK001','2022-12-09 11:29:04','2022-12-09 11:29:04');
+insert  into `pasiens`(`id`,`NIK`,`nama`,`tgl_lahir`,`tempat_lahir`,`jenis_kelamin`,`id_desa`,`alamat`,`id_pekerjaan`,`id_agama`,`id_golongan_darah`,`telp`,`status_perkawinan`,`alergi`,`foto`,`created_at`,`updated_at`,`created_by`,`updated_by`) values 
+('USR0000001',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'','2022-12-07 13:09:19','2022-12-07 13:09:19',NULL,NULL),
+('USR0000002','1234567890000000',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'USR0000002.png','2022-12-07 13:17:27','2022-12-07 18:36:49','USR0000002','USR0000002'),
+('USR0000003',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.jpg','2022-12-09 01:54:44','2022-12-09 01:54:44',NULL,NULL),
+('USR0000004',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.jpg','2022-12-09 02:01:32','2022-12-09 02:01:32',NULL,NULL),
+('USR0000005',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.jpg','2022-12-09 02:09:01','2022-12-09 02:09:01',NULL,NULL),
+('USR0000006',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.jpg','2022-12-09 02:09:04','2022-12-09 02:09:04',NULL,NULL),
+('USR0000007',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.jpg','2022-12-09 02:09:48','2022-12-09 02:09:48',NULL,NULL),
+('USR0000008',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.jpg','2022-12-09 02:10:32','2022-12-09 02:10:32',NULL,NULL),
+('USR0000009',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.jpg','2022-12-09 02:19:08','2022-12-09 02:19:08',NULL,NULL),
+('USR0000010',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default.jpg','2022-12-09 02:19:27','2022-12-09 02:19:27',NULL,NULL),
+('USR0000011','1234567890123456','lili','2022-12-27','sby','Laki-Laki','1506072009','ahsdakjdkahsdkj','06','07','07','123456789012','ceraihidup',NULL,'default.jpg','2022-12-09 02:19:47','2022-12-09 09:03:35','USR0000011','USR0000011');
+
+/*Table structure for table `password_resets` */
+
+DROP TABLE IF EXISTS `password_resets`;
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `password_resets` */
 
 /*Table structure for table `pekerjaan` */
 
@@ -92898,6 +92988,56 @@ insert  into `pendidikan`(`id_pendidikan`,`nama_pendidikan`) values
 ('09','Strata II'),
 ('10','Strata III');
 
+/*Table structure for table `personal_access_tokens` */
+
+DROP TABLE IF EXISTS `personal_access_tokens`;
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `personal_access_tokens` */
+
+insert  into `personal_access_tokens`(`id`,`tokenable_type`,`tokenable_id`,`name`,`token`,`abilities`,`last_used_at`,`created_at`,`updated_at`) values 
+(20,'App\\Models\\HakAkses','USR0000011','auth','34410b703cd36ee901c0c628e6f17534cf70b0556699730ecfdc3d3752ef76f8','[\"*\"]',NULL,'2022-12-09 02:19:57','2022-12-09 02:19:57'),
+(21,'App\\Models\\HakAkses','USR0000011','auth','9de79d0a90697a95a9de43c7347bb5998f1d34a78ada07ed05de604875dbaab9','[\"*\"]',NULL,'2022-12-09 02:20:18','2022-12-09 02:20:18'),
+(22,'App\\Models\\HakAkses','USR0000011','auth','86a45cc852e03e9512ae15cabfa0bcc54b446f5620d48f9d1fdd0ef5a456aa5e','[\"*\"]',NULL,'2022-12-09 02:21:48','2022-12-09 02:21:48'),
+(23,'App\\Models\\HakAkses','USR0000011','auth','de0dbc63e5ab070a7388675ea8263420f20bcab09458627ea2546598f43251d9','[\"*\"]',NULL,'2022-12-09 02:23:32','2022-12-09 02:23:32'),
+(24,'App\\Models\\HakAkses','USR0000011','auth','fc7086aed9c8f57a064b4ee864b9d9cc8f128df72409833060c492ec4ca9253b','[\"*\"]',NULL,'2022-12-09 02:24:17','2022-12-09 02:24:17'),
+(25,'App\\Models\\HakAkses','USR0000011','auth','b6aa6f64034a00dfc3b9512970a20f5af981cc38776ac954d42837eda7eb37c8','[\"*\"]',NULL,'2022-12-09 02:25:26','2022-12-09 02:25:26'),
+(26,'App\\Models\\HakAkses','USR0000011','auth','7e97d33d4e2c98eb743be3c0fc7ecc4b84c7fde0f6bdf1b11925dc771beea416','[\"*\"]',NULL,'2022-12-09 02:30:36','2022-12-09 02:30:36'),
+(27,'App\\Models\\HakAkses','USR0000011','auth','151cc59e87fd676ddd924c6d43a9486aba1106eadd820780666fca7db7b17c6f','[\"*\"]',NULL,'2022-12-09 02:33:01','2022-12-09 02:33:01'),
+(28,'App\\Models\\HakAkses','USR0000011','auth','320774849496c4c70b34e0874cdacf6d9755297abeb104fcdde677f12a1e2f0d','[\"*\"]',NULL,'2022-12-09 02:33:06','2022-12-09 02:33:06'),
+(29,'App\\Models\\HakAkses','USR0000011','auth','db3e3d5311d3ccaf230fde1e3b7f1baeeb8aefb4ad9a9db10b149eb65d48eb8f','[\"*\"]','2022-12-09 02:59:51','2022-12-09 02:38:03','2022-12-09 02:59:51'),
+(30,'App\\Models\\HakAkses','USR0000002','auth','4f1ccd1aa5c67e31decef7e7f48556bb787c09abf8f3b0ca5440a3ab56d8495e','[\"*\"]','2022-12-09 02:59:40','2022-12-09 02:43:13','2022-12-09 02:59:40'),
+(31,'App\\Models\\HakAkses','USR0000011','auth','8284ec0d0899190033fad907b9690943fe85e92565f76f4fabd18047f2d1a8c8','[\"*\"]','2022-12-09 03:00:17','2022-12-09 03:00:03','2022-12-09 03:00:17'),
+(32,'App\\Models\\HakAkses','USR0000011','auth','1bf20b88b53eee5ed11cbd17d8c0a2b45adcb1cb910b463e711bf37120290a16','[\"*\"]','2022-12-09 03:55:24','2022-12-09 03:01:18','2022-12-09 03:55:24'),
+(33,'App\\Models\\HakAkses','USR0000011','auth','d9bff48ec6ff77627a801efe91f4d0ada91f4248b8ee803bbdc9293df72acf72','[\"*\"]',NULL,'2022-12-09 03:57:07','2022-12-09 03:57:07'),
+(34,'App\\Models\\HakAkses','USR0000011','auth','d2a0d5edd4fd07ce8089a7c5dc08fa072016fef209faed87b107bfad91f721e6','[\"*\"]','2022-12-09 09:57:10','2022-12-09 03:59:08','2022-12-09 09:57:10'),
+(35,'App\\Models\\HakAkses','USR0000011','auth','3a03e413172582862f8740198f4b6ebf752e73164390e921338253bdf258953a','[\"*\"]','2022-12-09 10:13:08','2022-12-09 09:58:02','2022-12-09 10:13:08'),
+(36,'App\\Models\\HakAkses','USR0000011','auth','d7647ec350f3cbd7f4e6291aec7e5b169c2080ff6a8b81787fd6ccef9d94aeba','[\"*\"]','2022-12-09 10:17:52','2022-12-09 10:13:58','2022-12-09 10:17:52'),
+(37,'App\\Models\\HakAkses','USR0000011','auth','af30ac1d090ed6c6b71ce05a2135decdfed7af543fa7a11b58df011e21ae3aa1','[\"*\"]','2022-12-16 05:32:56','2022-12-16 05:19:11','2022-12-16 05:32:56'),
+(38,'App\\Models\\HakAkses','USR0000011','auth','a6710cc45e135cea0160d1bd5a3a079f2cfc72b0146028db11ce1ff983950a75','[\"*\"]','2022-12-16 06:44:39','2022-12-16 05:33:42','2022-12-16 06:44:39'),
+(39,'App\\Models\\HakAkses','USR0000011','auth','8d09e01b096335d260bc6d95133ccba538ce49dd01c596db02423169bee443aa','[\"*\"]','2022-12-18 19:07:15','2022-12-16 06:45:15','2022-12-18 19:07:15'),
+(40,'App\\Models\\HakAkses','USR0000011','auth','e42e43bf53273014fefaf6ba2da83ac6fe0992fa10c614177218c9dc87a30423','[\"*\"]','2022-12-18 19:58:44','2022-12-18 19:10:38','2022-12-18 19:58:44'),
+(41,'App\\Models\\HakAkses','USR0000011','auth','d56ab0ce7158b43383c6232f6ea7f544ce6d01e6e76c962eb733d61b98dceb2d','[\"*\"]','2022-12-19 03:05:17','2022-12-18 20:03:30','2022-12-19 03:05:17'),
+(42,'App\\Models\\HakAkses','USR0000011','auth','593aabe71f24a2fbb3603aedb00dbc709545f33c825687de1da8ddc784e32922','[\"*\"]','2022-12-19 03:48:36','2022-12-19 03:05:44','2022-12-19 03:48:36'),
+(43,'App\\Models\\HakAkses','USR0000011','auth','f8facb37abbfd782a0faf799ea47bd1d86e2ba9befd2dacb3a08f85fa886d78f','[\"*\"]','2022-12-19 04:24:17','2022-12-19 03:49:15','2022-12-19 04:24:17'),
+(44,'App\\Models\\HakAkses','USR0000011','auth','e857d46fab000df910c23d9ded86befd8a7c58173403a6f6823ad344ca0008a3','[\"*\"]','2022-12-20 04:53:42','2022-12-19 04:26:14','2022-12-20 04:53:42'),
+(45,'App\\Models\\HakAkses','USR0000011','auth','e926f6b4d5ade0d9b8a0c76e7a094a31cd7759d8721fbd9617947fd1f41392ff','[\"*\"]','2022-12-20 05:43:55','2022-12-20 04:54:15','2022-12-20 05:43:55'),
+(46,'App\\Models\\HakAkses','USR0000011','auth','92a33e9f87d6c5bd6f3a67a8209683e5e3e2b9a33f1e0b8be88dbfed5e221686','[\"*\"]',NULL,'2022-12-20 05:45:43','2022-12-20 05:45:43');
+
 /*Table structure for table `poli` */
 
 DROP TABLE IF EXISTS `poli`;
@@ -92907,31 +93047,36 @@ CREATE TABLE `poli` (
   `NAMA_POLI` varchar(50) NOT NULL,
   `KETERANGAN_POLI` varchar(30) NOT NULL,
   `STATUS_POLI` tinyint(1) NOT NULL,
+  `GAMBAR` varchar(50) NOT NULL,
+  `created_by` varchar(20) NOT NULL,
+  `updated_by` varchar(20) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`ID_POLI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `poli` */
 
-insert  into `poli`(`ID_POLI`,`NAMA_POLI`,`KETERANGAN_POLI`,`STATUS_POLI`) values 
-(1,'Poli Umum','oke',1),
-(2,'Poli Gigi','oke',1),
-(3,'Poli Gizi','oke',1),
-(4,'Poli Ibu dan Anak','oke',1),
-(5,'Poli Jantung','oke',1),
-(6,'Poli Mata','Oke',1),
-(7,'Poli Saraf','Oke',1),
-(8,'Poli Paru','',1),
-(9,'Poli THT','',1);
+insert  into `poli`(`ID_POLI`,`NAMA_POLI`,`KETERANGAN_POLI`,`STATUS_POLI`,`GAMBAR`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
+(1,'Poli Umum','oke',1,'stethoscope-white 1.png','','','2022-12-08 18:58:51','2022-12-08 18:58:51'),
+(2,'Poli Gigi','oke',1,'gigi.png','','','2022-12-08 18:58:51','2022-12-08 18:58:51'),
+(3,'Poli Gizi','oke',1,'gizi.png','','','2022-12-08 18:58:51','2022-12-08 18:58:51'),
+(4,'Poli Paru','',1,'paru.png','','','2022-12-08 18:58:51','2022-12-08 18:58:51'),
+(5,'Poli Saraf','Oke',1,'saraf.png','','','2022-12-08 18:58:51','2022-12-08 18:58:51'),
+(6,'Poli Mata','Oke',1,'mata.png','','','2022-12-08 18:58:51','2022-12-08 18:58:51'),
+(7,'Poli Jantung','oke',1,'jantung.png','','','2022-12-08 18:58:51','2022-12-08 18:58:51'),
+(8,'Poli THT','',1,'tht.png','','','2022-12-08 18:58:51','2022-12-08 18:58:51'),
+(9,'Poli Ibu dan Anak','oke',1,'ibuanak.png','','','2022-12-08 18:58:51','2022-12-08 18:58:51');
 
 /*Table structure for table `propinsi` */
 
 DROP TABLE IF EXISTS `propinsi`;
 
 CREATE TABLE `propinsi` (
-  `id` char(30) NOT NULL DEFAULT '',
-  `nama` varchar(100) NOT NULL DEFAULT '',
+  `id` char(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `nama` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
 
 /*Data for the table `propinsi` */
 
@@ -92971,6 +93116,30 @@ insert  into `propinsi`(`id`,`nama`) values
 ('91','PAPUA'),
 ('92','PAPUA BARAT');
 
+/*Table structure for table `reseps` */
+
+DROP TABLE IF EXISTS `reseps`;
+
+CREATE TABLE `reseps` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dokter_id` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `obat_id` smallint(6) NOT NULL,
+  `pasien_id` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keterangan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jumlah` smallint(2) NOT NULL,
+  `status` enum('belum','selesai','','') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `reseps` */
+
+insert  into `reseps`(`id`,`dokter_id`,`obat_id`,`pasien_id`,`keterangan`,`jumlah`,`status`,`created_at`,`updated_at`) values 
+(1,'DK001',1,'PS0001','d.d',2,'selesai','2017-08-22 11:24:49','2017-08-22 11:32:39'),
+(2,'DK002',1,'PS0002','d.d',1,'selesai','2017-08-22 11:28:29','2017-08-22 11:30:23'),
+(3,'DK002',1,'PS0003','d.d',1,'selesai','2017-08-22 11:38:48','2017-08-22 11:39:40');
+
 /*Table structure for table `resepsionists` */
 
 DROP TABLE IF EXISTS `resepsionists`;
@@ -92993,7 +93162,8 @@ CREATE TABLE `resepsionists` (
 /*Data for the table `resepsionists` */
 
 insert  into `resepsionists`(`id`,`username`,`password`,`nama`,`alamat`,`tgl_lahir`,`level`,`photo`,`created_at`,`updated_at`,`remember_token`) values 
-('RS001','resepsionist','$2y$10$E1wCm3A1jBjLzXZPnp3r1.bud02IZlDAoaLdsf0hP5hbiDdJCpGjK','resepsionist','sidoarjo','1993-08-24','resepsionist','user-resepsionist.jpg','2017-08-18 02:53:13','2022-12-06 19:52:11',NULL);
+('RS001','resepsionist','$2y$10$5iWKp8g4PXjf4ywNJEpajeFRzpzyOzcwZEzrwYVrbxLO5XOLiVf.q','resepsionist','sidoarjo','1993-08-24','resepsionist','user-resepsionist.jpg','2017-08-18 09:53:13','2022-12-21 19:12:16',NULL),
+('RS002','resepsionist','$2y$10$FBWsfC21xwkCRkdTUliJpe8eWePJFqK2g4938BU8d9ucSsZoxtByO','Lowell Nienow','760 River Stravenue Apt. 516\nNew Armandfort, SC 89095-0931','1970-11-16','resepsionist','','2022-11-18 21:26:31','2022-11-18 21:26:31',NULL);
 
 /*Table structure for table `rk_medis` */
 
@@ -93023,7 +93193,7 @@ CREATE TABLE `rk_medis` (
 /*Data for the table `rk_medis` */
 
 insert  into `rk_medis`(`id`,`pasien_id`,`nama`,`tgl_lahir`,`dokter_id`,`diagnosa`,`keluhan`,`anamnesis`,`tindakan`,`keterangan`,`alergi_obat`,`bb`,`tb`,`tensi`,`bw`,`created_at`,`updated_at`) values 
-('RK0001','PS0001','opick','1998-06-23','DK001','sakit kepala','pusing','pusing selama 3 hari','umum','oke','tidak',80.00,189.00,110.00,'tidak','2017-08-22 11:24:48','2022-11-18 21:44:04'),
+('RK0001','PS0001','opick','1998-06-23','DK001','sakit kepala','pusing','pusing selama 3 hari','umum','banyak istirahat','tidak',80.00,189.00,110.00,'tidak','2017-08-22 11:24:48','2017-08-22 11:24:48'),
 ('RK0002','PS0002','cesar','1994-10-20','DK002','sakit kepala','pusing mual','pusing selama seminggu','umum','jl. benyamin no. 40 jakarta','tidak',80.00,189.00,120.00,'tidak','2017-08-22 11:28:28','2017-08-22 11:28:28'),
 ('RK0003','PS0003','cesar','1994-10-20','DK002','sakit kepala','pusing','pusing selama seminggu','umum','banyak istirahat','tidak',90.00,189.00,120.00,'tidak','2017-08-22 11:38:48','2017-08-22 11:38:48');
 
@@ -93037,13 +93207,55 @@ CREATE TABLE `spesialis` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `spesialis` */
 
 insert  into `spesialis`(`id`,`spesialis`,`created_at`,`updated_at`) values 
 (1,'gigi','2017-08-18 09:54:22','2017-08-18 09:54:22'),
-(2,'organ dalam','2017-08-21 20:55:08','2017-08-21 20:55:08');
+(2,'organ dalam','2017-08-21 20:55:08','2017-08-21 20:55:08'),
+(3,'gigi','2022-11-18 21:26:31','2022-11-18 21:26:31'),
+(4,'mata','2022-11-18 21:26:31','2022-11-18 21:26:31'),
+(5,'umum','2022-11-18 21:26:31','2022-11-18 21:26:31'),
+(6,'anak','2022-11-18 21:26:31','2022-11-18 21:26:31');
+
+/*Table structure for table `transaksi_pasiens` */
+
+DROP TABLE IF EXISTS `transaksi_pasiens`;
+
+CREATE TABLE `transaksi_pasiens` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `dokter_id` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pasien_id` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tgl_resep` date NOT NULL,
+  `bayar` double NOT NULL,
+  `total` double NOT NULL,
+  `kembalian` double NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `transaksi_pasiens` */
+
+/*Table structure for table `users` */
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `users` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

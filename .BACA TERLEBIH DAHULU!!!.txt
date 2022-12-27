@@ -1,0 +1,21 @@
+user & password admin:
+Username : admin
+Password : admin
+
+user & password resepsionist:
+Username : resepsionist
+Password : resepsionist
+
+user & password master dokter:
+Username : dokter
+Password : dokter
+
+user & password loket:
+Username : loket
+Password : loket
+
+Fitur yang belum terselesaikan:
+- Fitur scan qr code pasien pada resepsionist masih menunggu zafira. 
+- Fitur create data pemeriksaan pada dokter masih belum karena masih stuck error pada controller
+- Fitur create, update, delete poli pada admin masih belum juga karena stuck error.
+- Fitur print pembayaran pada loket masih belum karena stuck error

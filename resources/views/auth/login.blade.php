@@ -41,8 +41,8 @@
             <div class="carousel-container">
               <div class="carousel-content container">
                 <div  data-aos="fade-up" data-aos-delay="200">
-                <h1 class="animate__animated animate__fadeInDown" style="text-align: center;color:rgb(255, 255, 255)">Selamat Datang di <span>Klinik Pratama</span></h1>
-                <h4 class="animate__animated animate__fadeInUp" style="text-align: center;color:rgb(255, 255, 255)"> <br>Pilih Login Sesuai Role Anda</h4>
+                <h1 class="animate__animated animate__fadeInDown" style="text-align: center;color:rgb(255, 255, 255)">Selamat Datang di <span>Master Klinik</span></h1>
+                <h4 class="animate__animated animate__fadeInUp" style="text-align: center;color:rgb(255, 255, 255)"> <br>Login Sesuai Role Anda</h4>
                   <div class="d-flex justify-content-center">
                     <div class="container" style="text-align: center;margin-top: 10px">
                       <br>
@@ -58,55 +58,11 @@
             </div>
           </div>
         </div>
-
-         
-
       </div>
     </div>
   </section><!-- End Hero -->
   <main id="main">
 
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Contact</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-5 d-flex align-items-stretch">
-            <div class="info">
-              <div class="address">
-                <i class="bi bi-geo-alt"></i>
-                <h4>Location:</h4>
-                <p>Nganjuk, Jawa Timur</p>
-              </div>
-
-              <div class="email">
-                <i class="bi bi-envelope"></i>
-                <h4>Email:</h4>
-                <p>info@example.com</p>
-              </div>
-
-              <div class="phone">
-                <i class="bi bi-phone"></i>
-                <h4>Call:</h4>
-                <p>055895548855</p>
-              </div>
-
-             
-            </div>
-
-          </div>
-
-
-        </div>
-
-      </div>
-    </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
 
@@ -118,28 +74,30 @@
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Klinik Pratama</h3>
+            <div  data-aos="fade-up" data-aos-delay="200">
+            <h3>Master Klinik</h3>
             <p>
-              Surabaya, Jawa Timur <br>
-              <strong>Phone:</strong> 0855895548855<br>
-              <strong>Email:</strong> info@example.com<br>
+              Nganjuk, Jawa Timur <br>
             </p>
+          </div>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
+            <div  data-aos="fade-up" data-aos-delay="200">
             <h4>Useful Links</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a  data-toggle="modal" href="#modal-resepsionist">Resepsionist</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a data-toggle="modal" href="#modal-dokter">Dokter</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a data-toggle="modal" href="#modal-loket">Loket</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a data-toggle="modal" href="#modal-admin">Admin</a></li>
             </ul>
+          </div>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+            <div  data-aos="fade-up" data-aos-delay="200">
+            <h4>Social Networks</h4>
             <div class="social-links mt-3">
               <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
               <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
@@ -148,14 +106,14 @@
               <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
             </div>
           </div>
-
+          </div>
         </div>
       </div>
     </div>
 
     <div class="container footer-bottom clearfix">
       <div class="copyright">
-        &copy; Copyright <strong><span>Klinik Pratama</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Master Klinik</span></strong>. All Rights Reserved
       </div>
     </div>
   </footer><!-- End Footer -->
