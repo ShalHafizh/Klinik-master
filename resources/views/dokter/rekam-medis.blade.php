@@ -7,13 +7,22 @@
       -webkit-appearance: none;
       margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
   }
+<<<<<<< HEAD
   input[type=number] {
       -moz-appearance:textfield; /* Firefox */
   }
+=======
+
+  input[type=number] {
+      -moz-appearance:textfield; /* Firefox */
+  }
+
+>>>>>>> c5fe16f4e25e9da2cb8f6a1771d21daa7d09d209
   .required:after {
     content:" *";
     color: #e32;
   }
+<<<<<<< HEAD
   textarea {
     resize: none;
   }
@@ -23,12 +32,31 @@
   td {
     white-space: nowrap;
   }
+=======
+
+  textarea {
+    resize: none;
+  }
+
+  table {
+    width: 100%
+  }
+
+  td {
+    white-space: nowrap;
+  }
+
+>>>>>>> c5fe16f4e25e9da2cb8f6a1771d21daa7d09d209
   .td-truncate {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
     max-width: 0;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> c5fe16f4e25e9da2cb8f6a1771d21daa7d09d209
   .needs-validation{
     border: 1px solid #e32;
   }
@@ -582,6 +610,10 @@
         }else{
             $('#dtl_bw_tidak').val(dtl_bw).prop('checked', true);
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> c5fe16f4e25e9da2cb8f6a1771d21daa7d09d209
         $('#dtl_pasien_id').val(dtl_pasien_id);
         $('#dtl_nama').val(dtl_nama);
         $('#dtl_tgl_lahir').val(dtl_tgl_lahir);
@@ -596,6 +628,10 @@
         $('#dtl_alergi_obat').val(dtl_alergi_obat);
         $('#dtl_dokter').val(dtl_dokter);
       });
+<<<<<<< HEAD
+=======
+
+>>>>>>> c5fe16f4e25e9da2cb8f6a1771d21daa7d09d209
       $('#frm-edit').on('submit', function(e) {
         e.preventDefault();
         var data = [

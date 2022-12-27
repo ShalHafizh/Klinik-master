@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class RK_Medis extends Model
 {
     protected $table = 'rk_medis';
-    protected $primariKey = 'id';
+    protected $primaryKey = 'id';
      public $incrementing = false;
     protected $fillable = [
     	'id',

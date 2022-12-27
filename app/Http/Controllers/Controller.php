@@ -10,6 +10,10 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+<<<<<<< HEAD
+=======
+
+>>>>>>> c5fe16f4e25e9da2cb8f6a1771d21daa7d09d209
     public function findDataWhere($model, $where)
     {
         $data = $model::where($where)->first();
