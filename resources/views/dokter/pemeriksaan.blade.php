@@ -11,6 +11,9 @@
 </div>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <a class="btn btn-primary btn-flat" role="button" data-toggle="collapse" href="#collapse-tambah" aria-expanded="false" aria-controls="collapse-tambah">
+			Tambah Pemeriksaan <i class="fa fa-plus"></i>
+		</a>
     <a class="btn btn-success" role="button" data-toggle="collapse" href="#collapse-excel" aria-expanded="false" aria-controls="collapse-excel">
     Export to excel <i class="fa fa-file-excel-o"></i>
   </a>
@@ -21,7 +24,7 @@
   {{-- Collapse excel --}}
   <div class="collapse" id="collapse-excel">
     <div class="well">
-      <form action="{{route('excelPembayaran', 'xlsx')}}" method="post" id="frm-excel" target="_blank">
+      <form action="{{route('tampilExcelPembayaran', 'xlsx')}}" method="post" id="frm-excel" target="_blank">
       {{csrf_field()}}
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div class="form-group">
@@ -45,7 +48,7 @@
   {{-- Collapse Pdf --}}
   <div class="collapse" id="collapse-pdf">
     <div class="well">
-      <form action="{{route('PDFPembayaran')}}" method="post" id="frm-pdf">
+      <form action="{{route('tampilPDFPembayaran')}}" method="post" id="frm-pdf">
       {{csrf_field()}}
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
           <div class="form-group">
@@ -81,7 +84,7 @@
             <tr>
               <th>No.</th>
               <th>Dokter</th>
-              <th>Nama Pasien</th>
+              <th>Pasien</th>
               <th>Tanggal Pemeriksaan</th>
               <th>Biaya</th>
               <th>Action</th>
@@ -92,13 +95,13 @@
           @foreach($pembayaran as $data)
             <tr>
               <td>{{ $no++ }}</td>
-              <td>{{ $data['dokter']['nama'] }}</td>
-              <td>{{ $data['pasien']['nama'] }}</td>
+              <td>{{ $data['dokter_id']}}</td>
+              <td>{{ $data['pasien_id'] }}</td>
               <td>{{ date('d-m-Y', strtotime($data['created_at'])) }}</td>
               <td>{{ $data['biaya_pemeriksaan']}}</td>
               <td>
-                <a href="{{ route('printDetailPembayaran', $data['pasien']['id']) }}" target="_blank" class="btn btn-info btn-flat"><i class="fa fa-print"></i></a>
-                <a href="#modal-detail" data-toggle="modal" class="btn btn-success btn-flat btn-detail" data-id="{{$data['pasien']['id']}}"
+                <a href="{{ route('cetakDetailPembayaran', $data['pasien_id']) }}" target="_blank" class="btn btn-info btn-flat"><i class="fa fa-print"></i></a>
+                <a href="#modal-detail" data-toggle="modal" class="btn btn-success btn-flat btn-detail" data-id="{{$data['pasien_id']}}"
                 ><i class="fa fa-search"></i></a>
                {{--  <a href="#modal-edit" data-toggle="modal" class="btn btn-warning btn-flat"><i class="fa fa-edit"></i></a> --}}
               </td>
@@ -168,7 +171,7 @@
         if ($('tr#baris').length >= 1) {
           return true;
         }else{
-        $.get("{{route('getIsiPembayaran')}}", {pasien_id:pasien_id}, function(data) {
+        $.get("{{route('ambilIsiPembayaran')}}", {pasien_id:pasien_id}, function(data) {
           $.each(data, function(i, item) {
             var date = new Date();
             var hari = date.getDate(item.created_at);

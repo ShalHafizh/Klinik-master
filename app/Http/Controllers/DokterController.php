@@ -213,11 +213,12 @@ class DokterController extends Controller
     }
 
     public function getPembayaran() {
-            $pembayaran = Pembayaran::with(['dokter','pasien', 'obat'])->where('dokter_id', Session::get('id'))->orderBy('created_at', 'desc')->groupBy('pasien_id')->get()->toArray();
-            $hariIni = Pembayaran::where('dokter_id', Session::get('id'))->whereDate('created_at', date('y-m-d'))->get()->toArray();
-            $dokter = Pembayaran::where('dokter_id', Session::get('id'))->get()->toArray();
-    	return view('dokter.pemeriksaan', ['pembayaran' => $pembayaran, 'hariIni' => $hariIni, 'dokter' => $dokter]);
-    }
+        $pembayaran = Pembayaran::with(['dokter','pasien', 'obat'])->get()->toArray();
+        $dokter = Dokter::get()->toArray();
+        $pasien = Pasien::get()->toArray();
+        $obat = Obat::get()->toArray();
+    return view('dokter.pemeriksaan', ['pembayaran' => $pembayaran, 'dokter' => $dokter, 'pasien' => $pasien, 'obat' => $obat]);
+}
 
     public function postPembayaran(Request $request) {
         if ($request->ajax()) {
