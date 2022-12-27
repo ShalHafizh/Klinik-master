@@ -12,7 +12,9 @@ use App\TransaksiPasien;
 use App\KategoriObat;
 use Session;
 use Excel;
-
+use Exception;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\Validator;
 class DokterController extends Controller
 {
     public function __construct() {
@@ -22,28 +24,140 @@ class DokterController extends Controller
     public function index() {   
         $obat = Obat::with('kategori')->get()->toArray();
         $kategori = KategoriObat::get()->toArray();
-    	return view('dokter.index', ['obat' => $obat, 'kategori' => $kategori]);
+        $dokter = Dokter::get()->toArray();
+    	return view('dokter.index', ['obat' => $obat, 'kategori' => $kategori, 'dokter' => $dokter]);
     }
 
 
     public function getRekamMedis() {
             $rekamMedis = RK_Medis::with('pasien', 'dokter')->get()->toArray();
+            $rekamMedis = RK_Medis::join('dokters', 'dokters.id', '=', 'rk_medis.dokter_id')->select('rk_medis.*', 'dokters.nama as nama_dokter')->get()->toArray();
             $pasien = Pasien::get()->toArray();
             $dokter = Dokter::get()->toArray();
+            // return $rekamMedis;
     	return view('dokter.rekam-medis', ['rekamMedis' => $rekamMedis, 'pasien' => $pasien, 'dokter' => $dokter]);
     }
 
-    public function postUpdateRekamMedis(Request $request) {
-        if ($request->ajax()) {
-            $data = RK_Medis::find($request->id)->update($request->all());
-            return response()->json($data);
+    public function getDetailPasien(Request $request) {
+        $pasien = Pasien::find($request->id);
+        if ($pasien) {
+            return response()->json($pasien);
+        } else {
+            $return   = response()->json([
+                'code' => '400',
+                'status' => 'Failed',
+                'messages' => 'Data tidak ditemukan'
+            ]);
+            $return->throwResponse();
+        }
+    }
+
+    public function postTambahRekamMedis(Request $request) {
+        $validate = Validator::make($request->all(), [
+            'pasien_id' => 'required | exists:pasiens,id',
+            'nama' => 'required | exists:pasiens,nama',
+            'tgl_lahir' => 'required',
+            'dokter_id' => 'required',
+            'diagnosa' => 'required',
+            'keluhan' => 'required',
+            'anamnesis' => 'required',
+            'tindakan' => 'required',
+            'keterangan' => 'required',
+            'alergi_obat' => 'required',
+            'bb' => 'required',
+            'tb' => 'required',
+            'tensi' => 'required',
+            'bw' => 'required',
+        ]);
+        if ($validate->fails()) {
+            return response()->json([
+                'code' => '400',
+                'status' => 'Failed',
+                'messages' => $validate->errors()
+            ]);
+        } else {
+            $id = IdGenerator::generate(['table' => 'rk_medis', 'length' => 10, 'prefix' =>'RM']);
+            $data = new RK_Medis();
+            $data->id = $id;
+            $data->pasien_id = $request->pasien_id;
+            $data->nama = $request->nama;
+            $data->tgl_lahir = $request->tgl_lahir;
+            $data->dokter_id = $request->dokter_id;
+            $data->diagnosa = $request->diagnosa;
+            $data->keluhan = $request->keluhan;
+            $data->anamnesis = $request->anamnesis;
+            $data->tindakan = $request->tindakan;
+            $data->keterangan = $request->keterangan;
+            $data->alergi_obat = $request->alergi_obat;
+            $data->bb = $request->bb;
+            $data->tb = $request->tb;
+            $data->tensi = $request->tensi;
+            $data->bw = $request->bw;
+            $data->save();
+            return response()->json([
+                'code' => '200',
+                'status' => 'Success',
+                'messages' => 'Data berhasil ditambahkan'
+            ]);
+        }
+    }
+
+    public function postUpdateRekamMedis(Request $request){
+        $validate = Validator::make($request->all(), [
+            'pasien_id' => 'required | exists:pasiens,id',
+            'nama' => 'required | exists:pasiens,nama',
+            'tgl_lahir' => 'required',
+            'dokter_id' => 'required',
+            'diagnosa' => 'required',
+            'keluhan' => 'required',
+            'anamnesis' => 'required',
+            'tindakan' => 'required',
+            'keterangan' => 'required',
+            'alergi_obat' => 'required',
+            'bb' => 'required',
+            'tb' => 'required',
+            'tensi' => 'required',
+            'bw' => 'required',
+        ]);
+        if ($validate->fails()) {
+            return response()->json([
+                'code' => '400',
+                'status' => 'Failed',
+                'messages' => $validate->errors()
+            ]);
+        } else {
+            $data = RK_Medis::find($request->id);
+            $data->pasien_id = $request->pasien_id;
+            $data->nama = $request->nama;
+            $data->tgl_lahir = $request->tgl_lahir;
+            $data->dokter_id = $request->dokter_id;
+            $data->diagnosa = $request->diagnosa;
+            $data->keluhan = $request->keluhan;
+            $data->anamnesis = $request->anamnesis;
+            $data->tindakan = $request->tindakan;
+            $data->keterangan = $request->keterangan;
+            $data->alergi_obat = $request->alergi_obat;
+            $data->bb = $request->bb;
+            $data->tb = $request->tb;
+            $data->tensi = $request->tensi;
+            $data->bw = $request->bw;
+            $data->save();
+            return response()->json([
+                'code' => '200',
+                'status' => 'Success',
+                'messages' => 'Data berhasil diubah'
+            ]);
         }
     }
 
     public function getDeleteRekamMedis(Request $request) {
         if ($request->ajax()) {
             $data = RK_Medis::find($request->id)->delete();
-            return response()->json($data);
+            return response()->json([
+                'code' => '200',
+                'status' => 'Success',
+                'messages' => 'Data berhasil dihapus'
+            ]);
         }
     }
 
